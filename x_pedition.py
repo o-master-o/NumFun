@@ -1,6 +1,7 @@
 import random
 import os
 import emoji
+import gettext
 
 
 class ExpressionGenerator:
@@ -28,6 +29,16 @@ class GameUI:
     """Handles all the User Interface operations for the game."""
 
     @staticmethod
+    def set_language(language):
+        localedir = os.path.join(os.path.dirname(__file__), 'locales')
+        gettext.bindtextdomain('base', localedir)
+        gettext.textdomain('base')
+        lang = gettext.translation('base', localedir=localedir, languages=[language], fallback=True)
+        lang.install()
+        global _
+        _ = lang.gettext
+
+    @staticmethod
     def clear_screen():
         """Clear the screen."""
         os.system('clear' if os.name == 'posix' else 'cls')
@@ -35,7 +46,7 @@ class GameUI:
     @staticmethod
     def display_message(message):
         """Display a message to the user."""
-        print(message)
+        print(_(message))
 
     @staticmethod
     def display_input_message(message):
@@ -98,6 +109,7 @@ class Game:
 def main():
     GameUI.clear_screen()
     GameUI.display_message('== SKLADATOR ==\nWelcome to the game\n')
+    GameUI.set_language(input('== set language\n'))
     max_number = int(GameUI.display_input_message("Enter the maximum number: "))
     game = Game(max_number, GameUI)
     game.start()
