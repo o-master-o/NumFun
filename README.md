@@ -1,1 +1,2 @@
-# permatica
+# NumFun
+Simple kids CLI Games
