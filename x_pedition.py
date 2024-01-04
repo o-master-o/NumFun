@@ -52,6 +52,20 @@ class ExpressionGenerator:
         else:
             return f"{a} * {b} = x", result
 
+    def generate_division(self):
+        result = random.randint(1, self.max_number)
+        b = random.randint(1, self.max_number // result)  # Ensure b is a divisor of the result
+        a = result * b  # a is now guaranteed to be divisible by b
+
+        x_position = random.choice(['a', 'b', 'result'])
+
+        if x_position == 'a':
+            return f"x / {b} = {result}", a
+        elif x_position == 'b':
+            return f"{a} / x = {result}", b
+        else:
+            return f"{a} / {b} = x", result
+
 
 class UI(ABC):
     @abstractmethod
