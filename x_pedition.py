@@ -38,6 +38,19 @@ class ExpressionGenerator:
         else:
             return f"{a} - {b} = x", result
 
+    def generate_multiplication(self):
+        a = random.randint(1, self.max_number)
+        b = random.randint(1, self.max_number // a)  # Ensure that a * b does not exceed max_number
+        result = a * b
+
+        x_position = random.choice(['a', 'b', 'result'])
+
+        if x_position == 'a':
+            return f"x * {b} = {result}", a
+        elif x_position == 'b':
+            return f"{a} * x = {result}", b
+        else:
+            return f"{a} * {b} = x", result
 
 
 class UI(ABC):
