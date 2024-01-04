@@ -1,19 +1,19 @@
 import random
 import os
+from abc import ABC, abstractmethod
+
 import emoji
-import gettext
 
 
 class ExpressionGenerator:
-    """Generates algebraic expressions."""
 
     def __init__(self, max_number):
-        self.max_number = max_number
+        self.max_number = min(1000, max(1, max_number))
 
-    def generate(self):
+    def generate_sum(self):
         """Generate a simple algebraic expression to solve for x."""
         result = random.randint(1, self.max_number)
-        a = random.randint(1, result)
+        a = random.randint(0, result)
         b = result - a
         x = random.choice([a, b, result])
 
@@ -25,42 +25,35 @@ class ExpressionGenerator:
             return f"{a} + {b} = x", x
 
 
-class GameUI:
-    """Handles all the User Interface operations for the game."""
+class UI(ABC):
+    @abstractmethod
+    def reset_screen(self):
+        pass
 
-    @staticmethod
-    def set_language(language):
-        localedir = os.path.join(os.path.dirname(__file__), 'locales')
-        gettext.bindtextdomain('base', localedir)
-        gettext.textdomain('base')
-        lang = gettext.translation('base', localedir=localedir, languages=[language], fallback=True)
-        lang.install()
-        global _
-        _ = lang.gettext
+    @abstractmethod
+    def display_message(self, message):
+        pass
 
-    @staticmethod
-    def clear_screen():
-        """Clear the screen."""
+    @abstractmethod
+    def ask_question(self, message):
+        pass
+
+
+class CliUI(UI):
+    CONGRATULATIONS = f"{emoji.emojize(':smiling_cat_with_heart-eyes:')} Congratulations!"
+    COMMISERATIONS = f"{emoji.emojize(':crying_cat:')} Try again!"
+
+    def reset_screen(self):
         os.system('clear' if os.name == 'posix' else 'cls')
 
-    @staticmethod
-    def display_message(message):
-        """Display a message to the user."""
-        print(_(message))
+    def display_message(self, message):
+        print(message)
 
-    @staticmethod
-    def display_input_message(message):
-        """Display an input message and return the user's input."""
+    def ask_question(self, message):
         return input(message)
-
-    @staticmethod
-    def display_emoji(emoji_code):
-        """Display an emoji."""
-        print(emoji.emojize(emoji_code))
 
 
 class Game:
-    """Manages the game logic."""
 
     def __init__(self, max_number, ui):
         self.max_number = max_number
@@ -69,10 +62,9 @@ class Game:
         self.ui = ui
 
     def start(self):
-        """Start the game."""
         try:
             while True:
-                expression, answer = self.generator.generate()
+                expression, answer = self.generator.generate_sum()
                 self.ui.display_message('=======================')
                 self.ui.display_message("Find x:\n" + expression)
 
@@ -86,32 +78,29 @@ class Game:
 
         except KeyboardInterrupt:
             self.ui.display_message("\nGame exited.")
-        except ValueError:
-            self.ui.display_message("Invalid input. Please enter a valid number.")
 
     def attempt_solve(self, answer):
-        """Attempt to solve the expression."""
         for _ in range(self.chances):
-            user_answer = int(self.ui.display_input_message("Enter the value of x: "))
+            user_answer = int(self.ui.ask_question("Enter the value of x: "))
             if user_answer == answer:
-                self.ui.display_emoji(":smiling_cat_with_heart-eyes: Congratulations!")
+                self.ui.display_message(self.ui.CONGRATULATIONS)
                 return True
             else:
-                self.ui.display_emoji(":crying_cat: Try again!")
+                self.ui.display_message(self.ui.COMMISERATIONS)
         return False
 
     def prompt_continue(self):
-        """Prompt the user to continue or exit."""
-        user_input = self.ui.display_input_message("Press Enter to continue or type 'exit' and press Enter to exit: ")
+        user_input = self.ui.ask_question("Press Enter to continue or type 'exit' and press Enter to exit: ")
         return user_input.strip().lower() != 'exit'
 
 
 def main():
-    GameUI.clear_screen()
-    GameUI.display_message('== SKLADATOR ==\nWelcome to the game\n')
-    GameUI.set_language(input('== set language\n'))
-    max_number = int(GameUI.display_input_message("Enter the maximum number: "))
-    game = Game(max_number, GameUI)
+    ui = CliUI()
+    ui.reset_screen()
+    ui.display_message('== X-pedition ==\n'
+                       'Welcome to the game\n')
+    max_number = int(ui.ask_question("Enter the maximum number you want to solve: "))
+    game = Game(max_number, ui)
     game.start()
 
 
