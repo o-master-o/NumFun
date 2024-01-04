@@ -1,8 +1,16 @@
 import random
 import os
 from abc import ABC, abstractmethod
+from enum import Enum
 
 import emoji
+
+
+class OPERATIONS(Enum):
+    ADDITION = '+'
+    SUBTRACTION = '-'
+    MULTIPLICATION = '*'
+    DIVISION = '/'
 
 
 class ExpressionGenerator:
@@ -11,60 +19,42 @@ class ExpressionGenerator:
         self.max_number = min(1000, max(1, max_number))
 
     def generate_sum(self):
-        """Generate a simple algebraic expression to solve for x."""
         result = random.randint(1, self.max_number)
         a = random.randint(0, result)
         b = result - a
-        x_position = random.choice(['a', 'b', 'result'])
 
-        if x_position == 'a':
-            return f"x + {b} = {result}", a
-        elif x_position == 'b':
-            return f"{a} + x = {result}", b
-        else:
-            return f"{a} + {b} = x", result
+        return self._prepare_expression(OPERATIONS.ADDITION.value, a, b, result)
 
     def generate_subtraction(self):
         a = random.randint(1, self.max_number)
         b = random.randint(0, a)
         result = a - b
 
-        x_position = random.choice(['a', 'b', 'result'])
-
-        if x_position == 'a':
-            return f"x - {b} = {result}", a
-        elif x_position == 'b':
-            return f"{a} - x = {result}", b
-        else:
-            return f"{a} - {b} = x", result
+        return self._prepare_expression(OPERATIONS.SUBTRACTION.value, a, b, result)
 
     def generate_multiplication(self):
         a = random.randint(1, self.max_number)
         b = random.randint(1, self.max_number // a)  # Ensure that a * b does not exceed max_number
         result = a * b
 
-        x_position = random.choice(['a', 'b', 'result'])
-
-        if x_position == 'a':
-            return f"x * {b} = {result}", a
-        elif x_position == 'b':
-            return f"{a} * x = {result}", b
-        else:
-            return f"{a} * {b} = x", result
+        return self._prepare_expression(OPERATIONS.MULTIPLICATION.value, a, b, result)
 
     def generate_division(self):
         result = random.randint(1, self.max_number)
         b = random.randint(1, self.max_number // result)  # Ensure b is a divisor of the result
         a = result * b  # a is now guaranteed to be divisible by b
 
+        return self._prepare_expression(OPERATIONS.DIVISION.value, a, b, result)
+
+    def _prepare_expression(self, operation, a, b, result):
         x_position = random.choice(['a', 'b', 'result'])
 
         if x_position == 'a':
-            return f"x / {b} = {result}", a
+            return f"x {operation} {b} = {result}", a
         elif x_position == 'b':
-            return f"{a} / x = {result}", b
+            return f"{a} {operation} x = {result}", b
         else:
-            return f"{a} / {b} = x", result
+            return f"{a} {operation} {b} = x", result
 
 
 class UI(ABC):
