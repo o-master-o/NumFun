@@ -68,10 +68,20 @@ def test_expression_generator_generate_subtraction_returns_correct_expressions(r
     (5, 10, 'result', '5 * 10 = x', 50),
     (11, 0, 'b', '11 * x = 0', 0),
 ])
-def test_expression_generator_generate_subtraction_returns_correct_expressions(randint, a, b, x_position, expected_expression, x):
+def test_expression_generator_generate_multiplication_returns_correct_expressions(randint, a, b, x_position, expected_expression, x):
     randint([a, b], x_position)
     expression, returned_x = ExpressionGenerator(50).generate_multiplication()
     assert expected_expression == expression
     assert x == returned_x
-    print(expression)
-    print(returned_x)
+
+
+@pytest.mark.parametrize('result, b, x_position, expected_expression, x', [
+    (3, 5, 'a', 'x / 5 = 3', 15),
+    (1, 1, 'b', '1 / x = 1', 1),
+    (5, 5, 'result', '25 / 5 = x', 5),
+])
+def test_expression_generator_generate_division_returns_correct_expressions(randint, result, b, x_position, expected_expression, x):
+    randint([result, b], x_position)
+    expression, returned_x = ExpressionGenerator(50).generate_division()
+    assert expected_expression == expression
+    assert x == returned_x
