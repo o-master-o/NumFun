@@ -15,14 +15,29 @@ class ExpressionGenerator:
         result = random.randint(1, self.max_number)
         a = random.randint(0, result)
         b = result - a
-        x = random.choice([a, b, result])
+        x_position = random.choice(['a', 'b', 'result'])
 
-        if x == a:
-            return f"x + {b} = {a + b}", x
-        elif x == b:
-            return f"{a} + x = {a + b}", x
+        if x_position == 'a':
+            return f"x + {b} = {result}", a
+        elif x_position == 'b':
+            return f"{a} + x = {result}", b
         else:
-            return f"{a} + {b} = x", x
+            return f"{a} + {b} = x", result
+
+    def generate_subtraction(self):
+        a = random.randint(1, self.max_number)
+        b = random.randint(0, a)
+        result = a - b
+
+        x_position = random.choice(['a', 'b', 'result'])
+
+        if x_position == 'a':
+            return f"x - {b} = {result}", a
+        elif x_position == 'b':
+            return f"{a} - x = {result}", b
+        else:
+            return f"{a} - {b} = x", result
+
 
 
 class UI(ABC):
