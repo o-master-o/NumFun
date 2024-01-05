@@ -20,13 +20,13 @@ def randint(random):
 
 
 @pytest.fixture
-def sut(randint):
+def sut():
     return ExpressionGenerator()
 
 
 @pytest.fixture
 def sut_max_50(sut):
-    sut.set_max_number(50)
+    sut.max_number = 50
     return sut
 
 
@@ -42,9 +42,8 @@ def sut_max_50(sut):
 
 ])
 def test_expression_generator_generate_sum_limits_max_value(sut, random, max_number, normalized_max_number):
-    sut.set_max_number(max_number)
-    sut.generate_sum()
-    random.randint.assert_any_call(1, normalized_max_number)
+    sut.max_number = max_number
+    assert normalized_max_number == sut.max_number
 
 
 @pytest.mark.parametrize('result, a, x_position, expected_expression, x', [

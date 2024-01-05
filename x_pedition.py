@@ -16,48 +16,51 @@ class OPERATIONS(Enum):
 class ExpressionGenerator:
 
     def __init__(self):
-        self.max_number = 10
+        self._max_number = 10
 
-    def set_max_number(self, max_number):
-        self.max_number = min(1000, max(1, max_number))
+    @property
+    def max_number(self):
+        return self._max_number
+
+    @max_number.setter
+    def max_number(self, value):
+        self._max_number = min(1000, max(1, value))
 
     def generate_sum(self):
-        result = random.randint(1, self.max_number)
+        result = random.randint(1, self._max_number)
         a = random.randint(0, result)
         b = result - a
 
         return self._prepare_expression(OPERATIONS.ADDITION.value, a, b, result)
 
     def generate_subtraction(self):
-        a = random.randint(1, self.max_number)
+        a = random.randint(1, self._max_number)
         b = random.randint(0, a)
         result = a - b
 
         return self._prepare_expression(OPERATIONS.SUBTRACTION.value, a, b, result)
 
     def generate_multiplication(self):
-        a = random.randint(1, self.max_number)
-        b = random.randint(1, self.max_number // a)
+        a = random.randint(1, self._max_number)
+        b = random.randint(1, self._max_number // a)
         result = a * b
 
         return self._prepare_expression(OPERATIONS.MULTIPLICATION.value, a, b, result)
 
     def generate_division(self):
-        result = random.randint(1, self.max_number)
-        b = random.randint(1, self.max_number // result)
+        result = random.randint(1, self._max_number)
+        b = random.randint(1, self._max_number // result)
         a = result * b
 
         return self._prepare_expression(OPERATIONS.DIVISION.value, a, b, result)
 
-    def _prepare_expression(self, operation, a, b, result):
-        x_position = random.choice(['a', 'b', 'result'])
-
-        if x_position == 'a':
-            return f"x {operation} {b} = {result}", a
-        elif x_position == 'b':
-            return f"{a} {operation} x = {result}", b
-        else:
-            return f"{a} {operation} {b} = x", result
+    @staticmethod
+    def _prepare_expression(operation, a, b, result):
+        variables = {'a': a, 'b': b, 'result': result}
+        x_position = random.choice(list(variables.keys()))
+        x = variables[x_position]
+        variables[x_position] = 'x'
+        return f"{variables['a']} {operation} {variables['b']} = {variables['result']}", x
 
 
 class UI(ABC):
@@ -132,7 +135,7 @@ class Game:
         self.ui.display_message('== X-pedition ==\n'
                                 'Welcome to the game\n')
         max_number = int(self.ui.ask_question("Enter the maximum number you want to solve: "))
-        self.generator.set_max_number(max_number)
+        self.generator.max_number = max_number
 
 
 def main():
