@@ -15,7 +15,10 @@ class OPERATIONS(Enum):
 
 class ExpressionGenerator:
 
-    def __init__(self, max_number):
+    def __init__(self):
+        self.max_number = 10
+
+    def set_max_number(self, max_number):
         self.max_number = min(1000, max(1, max_number))
 
     def generate_sum(self):
@@ -34,15 +37,15 @@ class ExpressionGenerator:
 
     def generate_multiplication(self):
         a = random.randint(1, self.max_number)
-        b = random.randint(1, self.max_number // a)  # Ensure that a * b does not exceed max_number
+        b = random.randint(1, self.max_number // a)
         result = a * b
 
         return self._prepare_expression(OPERATIONS.MULTIPLICATION.value, a, b, result)
 
     def generate_division(self):
         result = random.randint(1, self.max_number)
-        b = random.randint(1, self.max_number // result)  # Ensure b is a divisor of the result
-        a = result * b  # a is now guaranteed to be divisible by b
+        b = random.randint(1, self.max_number // result)
+        a = result * b
 
         return self._prepare_expression(OPERATIONS.DIVISION.value, a, b, result)
 
@@ -87,11 +90,10 @@ class CliUI(UI):
 
 class Game:
 
-    def __init__(self, max_number, ui):
-        self.max_number = max_number
+    def __init__(self, ui):
         self.chances = 3
-        self.generator = ExpressionGenerator(max_number)
         self.ui = ui
+        self.generator = ExpressionGenerator()
 
     def start(self):
         try:
@@ -125,14 +127,17 @@ class Game:
         user_input = self.ui.ask_question("Press Enter to continue or type 'exit' and press Enter to exit: ")
         return user_input.strip().lower() != 'exit'
 
+    def prepare(self):
+        self.ui.reset_screen()
+        self.ui.display_message('== X-pedition ==\n'
+                                'Welcome to the game\n')
+        max_number = int(self.ui.ask_question("Enter the maximum number you want to solve: "))
+        self.generator.set_max_number(max_number)
+
 
 def main():
-    ui = CliUI()
-    ui.reset_screen()
-    ui.display_message('== X-pedition ==\n'
-                       'Welcome to the game\n')
-    max_number = int(ui.ask_question("Enter the maximum number you want to solve: "))
-    game = Game(max_number, ui)
+    game = Game(CliUI())
+    game.prepare()
     game.start()
 
 
