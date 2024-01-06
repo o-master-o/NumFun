@@ -12,6 +12,10 @@ class OPERATIONS(Enum):
     MULTIPLICATION = '*'
     DIVISION = '/'
 
+    @classmethod
+    def values_list(cls):
+        return [member.value for member in cls]
+
 
 class ExpressionGenerator:
 
@@ -25,6 +29,21 @@ class ExpressionGenerator:
     @max_number.setter
     def max_number(self, value):
         self._max_number = min(1000, max(1, value))
+
+    def generate_random_expression(self, operations):
+        operation_methods = {
+            OPERATIONS.ADDITION.value: self.generate_sum,
+            OPERATIONS.SUBTRACTION.value: self.generate_subtraction,
+            OPERATIONS.MULTIPLICATION.value: self.generate_multiplication,
+            OPERATIONS.DIVISION.value: self.generate_division
+        }
+
+        available_methods = [operation_methods[op] for op in operations if op in operation_methods]
+        if not available_methods:
+            raise ValueError("Invalid or unsupported operations provided.")
+
+        chosen_method = random.choice(available_methods)
+        return chosen_method()
 
     def generate_sum(self):
         result = random.randint(1, self._max_number)
@@ -93,15 +112,17 @@ class CliUI(UI):
 
 class Game:
 
-    def __init__(self, ui):
-        self.chances = 3
+    def __init__(self, ui, chances=3):
+        self.chances = chances
+        self.operations = OPERATIONS.values_list()
         self.ui = ui
         self.generator = ExpressionGenerator()
 
     def start(self):
+
         try:
             while True:
-                expression, answer = self.generator.generate_sum()
+                expression, answer = self.generator.generate_random_expression(self.operations)
                 self.ui.display_message('=======================')
                 self.ui.display_message("Find x:\n" + expression)
 
@@ -132,10 +153,24 @@ class Game:
 
     def prepare(self):
         self.ui.reset_screen()
-        self.ui.display_message('== X-pedition ==\n'
-                                'Welcome to the game\n')
-        max_number = int(self.ui.ask_question("Enter the maximum number you want to solve: "))
+        self.ui.display_message('== X-pedition ==\nWelcome to the game\n')
+        self._set_game_max_number()
+        self._set_available_operations()
+
+    def _set_game_max_number(self):
+        max_number = int(self.ui.ask_question("Enter the maximum number you want to solve. It should be not bigger than 1000: "))
         self.generator.max_number = max_number
+
+    def _set_available_operations(self):
+        user_input = self.ui.ask_question("You have to choose operations you want to use\n"
+                                          "+) +\n"
+                                          "-) -\n"
+                                          "*) *\n"
+                                          "/) /\n"
+                                          "By default all operations will be used '+-*/'"
+                                          "For example +* will use +* (addition and multiplication expressions)\n"
+                                          "Enter your answer: ")
+        self.operations = user_input or OPERATIONS.values_list()
 
 
 def main():
