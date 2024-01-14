@@ -123,14 +123,10 @@ class Game:
         try:
             while True:
                 expression, answer = self.generator.generate_random_expression(self.operations)
-                self.ui.display_message('=======================')
-                self.ui.display_message("Find x:\n" + expression)
-
+                self.ui.display_message("=======================\nFind x:\n" + expression)
                 solved = self.attempt_solve(answer)
-
                 if not solved:
                     self.ui.display_message(f"The correct answer was: {answer}")
-
                 if not self.prompt_continue():
                     break
 
@@ -158,8 +154,7 @@ class Game:
         self._set_available_operations()
 
     def _set_game_max_number(self):
-        max_number = int(self.ui.ask_question("Enter the maximum number you want to solve. It should be not bigger than 1000: "))
-        self.generator.max_number = max_number
+        self.generator.max_number = int(self.ui.ask_question("Enter the maximum number you want to solve. It should be not bigger than 1000: "))
 
     def _set_available_operations(self):
         user_input = self.ui.ask_question("You have to choose operations you want to use\n"
