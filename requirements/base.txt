@@ -1,1 +1,3 @@
 emoji
+rich
+typer[all]
