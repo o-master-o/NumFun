@@ -1,5 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR=$(dirname "$0")
+VENV_DIR=$SCRIPT_DIR/venv
 source $SCRIPT_DIR/version_check.sh
 START_TAG="# NumFun game -- start tag"
 END_TAG="# NumFun game -- end tag"
@@ -43,13 +44,15 @@ clean_environment () {
 
 create_virtualenv() {
     local python_executable=$1
-    virtualenv -p $python_executable "$SCRIPT_DIR/venv"
-    echo "Virtual environment created in $SCRIPT_DIR/venv"
+    virtualenv -p $python_executable "$VENV_DIR"
+    echo "Virtual environment created in $VENV_DIR"
 }
 
 
 install_requirements() {
+    source "$VENV_DIR/bin/activate"
     pip install -r "$SCRIPT_DIR/requirements/base.txt"
+    deactivate
 }
 
 show_welcome_header () {
@@ -80,13 +83,8 @@ clean_environment
 install_virtualenv_if_needed
 create_virtualenv $FOUND_PYTHON_PATH
 install_requirements
-
 add_to_bashrc "$START_TAG"
-source /path/to/new/virtual/environment/bin/activate
 
-add_to_bashrc "some text"
-# add_to_path
-deactivate
 
 add_to_bashrc "$END_TAG"
 clear_screen
