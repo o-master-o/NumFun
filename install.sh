@@ -1,10 +1,13 @@
 #!/bin/bash
 SCRIPT_DIR=$(dirname "$0")
+BASHRC="$HOME/.bashrc"
 VENV_DIR=$SCRIPT_DIR/venv
+VENV_PYTHON_PATH="$VENV_DIR/bin/python"
+START_APP_PATH="$SCRIPT_DIR/start.py"
 source $SCRIPT_DIR/version_check.sh
 START_TAG="# NumFun game -- start tag"
 END_TAG="# NumFun game -- end tag"
-BASHRC="$HOME/.bashrc"
+
 
 clear_screen () {
     clear -x
@@ -50,25 +53,24 @@ create_virtualenv() {
 
 
 install_requirements() {
-    source "$VENV_DIR/bin/activate"
     pip install -r "$SCRIPT_DIR/requirements/base.txt"
-    deactivate
 }
 
-show_welcome_header () {
-    echo -e "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓"
-    echo -e "┃                                                                   ┃"
-    echo -e "┃   ███╗   ██╗██╗   ██╗███╗   ███╗    ███████╗██╗   ██╗███╗   ██╗   ┃"
-    echo -e "┃   ████╗  ██║██║   ██║████╗ ████║    ██╔════╝██║   ██║████╗  ██║   ┃"
-    echo -e "┃   ██╔██╗ ██║██║   ██║██╔████╔██║    █████╗  ██║   ██║██╔██╗ ██║   ┃"
-    echo -e "┃   ██║╚██╗██║██║   ██║██║╚██╔╝██║    ██╔══╝  ██║   ██║██║╚██╗██║   ┃"
-    echo -e "┃   ██║ ╚████║╚██████╔╝██║ ╚═╝ ██║    ██║     ╚██████╔╝██║ ╚████║   ┃"
-    echo -e "┃   ╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝    ╚═╝      ╚═════╝ ╚═╝  ╚═══╝   ┃"
-    echo -e "┃                                                                   ┃"
-    echo -e "┃   ═══════════ Welcome to NumFun! Let's Enjoy Math! ════════════   ┃"
-    echo -e "┃                                                                   ┃"
-    echo -e "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"
+add_shebang_to_start_file() {
+    $VENV_PYTHON_PATH
 }
+
+replace_or_add_shebang() {
+    local file_path="$1"
+    local new_shebang="$2"
+
+    if [[ $(head -n 1 "$file_path") == \#!* ]]; then
+        sed -i "1s|^.*$|$new_shebang|" "$file_path"
+    else
+        sed -i "1i$new_shebang" "$file_path"
+    fi
+}
+
 
 # Installation steps ---------->
 
@@ -82,10 +84,15 @@ echo "Using Python at $FOUND_PYTHON_PATH for installation."
 clean_environment
 install_virtualenv_if_needed
 create_virtualenv $FOUND_PYTHON_PATH
-install_requirements
+replace_or_add_shebang "$START_APP_PATH" "#!$VENV_PYTHON_PATH"
 add_to_bashrc "$START_TAG"
 
+source "$VENV_DIR/bin/activate"
+install_requirements
+"$VENV_PYTHON_PATH" "$START_APP_PATH" --install-completion
+deactivate
 
 add_to_bashrc "$END_TAG"
 clear_screen
-show_welcome_header
+
+$START_APP_PATH
