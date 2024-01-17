@@ -4,6 +4,8 @@ BASHRC="$HOME/.bashrc"
 VENV_DIR=$SCRIPT_DIR/venv
 VENV_PYTHON_PATH="$VENV_DIR/bin/python"
 START_APP_PATH="$SCRIPT_DIR/start.py"
+TMP_DIR="$SCRIPT_DIR/tmp"
+START_APP_LINK="$TMP_DIR/numfun"
 source $SCRIPT_DIR/version_check.sh
 START_TAG="# NumFun game -- start tag"
 END_TAG="# NumFun game -- end tag"
@@ -27,6 +29,16 @@ remove_venv () {
     rm -rf "$SCRIPT_DIR/venv"
 }
 
+remove_tmp() {
+    rm -rf $TMP_DIR
+}
+
+clean_environment () {
+    clean_bashrc
+    remove_venv
+    remove_tmp
+}
+
 install_virtualenv_if_needed() {
     if ! command -v virtualenv &> /dev/null; then
         echo "virtualenv is not installed. Installing it now..."
@@ -37,13 +49,6 @@ install_virtualenv_if_needed() {
         echo "virtualenv is already installed."
     fi
 }
-
-
-clean_environment () {
-    clean_bashrc
-    remove_venv
-}
-
 
 create_virtualenv() {
     local python_executable=$1
@@ -71,6 +76,11 @@ replace_or_add_shebang() {
     fi
 }
 
+prepare_app_tmp_path() {
+    mkdir $TMP_DIR
+    ln -s "$START_APP_PATH" "$START_APP_LINK"
+    echo 'export PATH=$PATH:'$TMP_DIR >> $BASHRC
+}
 
 # Installation steps ---------->
 
@@ -87,12 +97,13 @@ create_virtualenv $FOUND_PYTHON_PATH
 replace_or_add_shebang "$START_APP_PATH" "#!$VENV_PYTHON_PATH"
 add_to_bashrc "$START_TAG"
 
+prepare_app_tmp_path
 source "$VENV_DIR/bin/activate"
 install_requirements
-"$VENV_PYTHON_PATH" "$START_APP_PATH" --install-completion
+"$VENV_PYTHON_PATH" "$START_APP_LINK" --install-completion
 deactivate
-
 add_to_bashrc "$END_TAG"
+$shell
 clear_screen
 
 $START_APP_PATH
