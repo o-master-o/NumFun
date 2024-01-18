@@ -1,6 +1,6 @@
 import pytest
 
-from x_pedition import ExpressionGenerator
+from games.x_pedition import ExpressionGenerator
 
 
 @pytest.fixture
