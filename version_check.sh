@@ -1,10 +1,10 @@
 #!/bin/bash
-
+PY_VERSION="3.6"
 FOUND_PYTHON_PATH=""
 
 check_python_version() {
     local python_executable=$1
-    $python_executable -c "import sys; exit(1) if sys.version_info < (3, 10) else exit(0)"
+    $python_executable -c "import sys; exit(1) if sys.version_info < (${PY_VERSION//./, }) else exit(0)"
     return $?
 }
 
@@ -41,7 +41,7 @@ check_pyenv_python() {
 }
 
 prompt_user_for_python() {
-    read -p "Enter the path to a Python >= 3.10 executable: " user_python_path
+    read -p "Enter the path to a Python >= $PY_VERSION executable: " user_python_path
     if [ -n "$user_python_path" ] && check_python_version "$user_python_path"; then
         FOUND_PYTHON_PATH=$(pyenv which python$version)
         return 0
