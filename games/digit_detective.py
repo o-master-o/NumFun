@@ -16,7 +16,7 @@ class NumberGuessingGame:
             return "correct"
 
 
-class GameInterface:
+class DigitDetectiveGame:
     def __init__(self, game):
         self.game = game
 
@@ -34,9 +34,7 @@ class GameInterface:
 
 
 def main():
-    game = NumberGuessingGame(1, 100)
-    interface = GameInterface(game)
-    interface.start()
+    DigitDetectiveGame(NumberGuessingGame(1, 100)).start()
 
 
 if __name__ == "__main__":
