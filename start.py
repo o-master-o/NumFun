@@ -1,31 +1,11 @@
 #!/home/yoda/work/python_projects/NumFun/venv/bin/python
 import typer
 from rich.console import Console
-from rich.panel import Panel
 
-from games.x_pedition import main
-from games.digit_detective import detect
-
-from games.calculator import calcul
+from games import x_pedition, digit_detective, calculator
+from utils import HEADER
 
 console = Console()
-
-
-HEADER = """[blue] \n
-[yellow]
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                                                   ┃
-┃   ███╗   ██╗██╗   ██╗███╗   ███╗    ███████╗██╗   ██╗███╗   ██╗   ┃
-┃   ████╗  ██║██║   ██║████╗ ████║    ██╔════╝██║   ██║████╗  ██║   ┃
-┃   ██╔██╗ ██║██║   ██║██╔████╔██║    █████╗  ██║   ██║██╔██╗ ██║   ┃
-┃   ██║╚██╗██║██║   ██║██║╚██╔╝██║    ██╔══╝  ██║   ██║██║╚██╗██║   ┃
-┃   ██║ ╚████║╚██████╔╝██║ ╚═╝ ██║    ██║     ╚██████╔╝██║ ╚████║   ┃
-┃   ╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝    ╚═╝      ╚═════╝ ╚═╝  ╚═══╝   ┃
-┃                                                                   ┃
-┃   ═══════════ Welcome to NumFun! Let's Enjoy Math! ════════════   ┃
-┃                                                                   ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-"""
 
 
 def game_app():
@@ -37,19 +17,19 @@ def game_app():
         help=HEADER,
     )
 
-    @app.command(help='this is game x-pedition')
-    def x_pedition():
-        main()
+    @app.command(name='x-perdition', help='this is game x-pedition')
+    def x_pedition_app():
+        x_pedition.main()
 
-    @app.command()
-    def digit_detective(help='this is game digit-detectiven'):
-        print(f"Hello digit_detective")
-        detect()
+    @app.command(name='digit-detective', help='this is game digit-detectiven')
+    def digit_detective_app():
+        print("Hello digit_detective")
+        digit_detective.main()
 
-    @app.command()
-    def calculator(help='this is game calculator'):
-        print(f"Hello calculator")
-        calcul()
+    @app.command(name='calculator', help='this is game calculator')
+    def calculator_app():
+        print("Hello calculator")
+        calculator.main()
 
     return app
 

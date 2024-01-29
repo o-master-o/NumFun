@@ -33,11 +33,11 @@ class GameInterface:
                 print(f"Try guessing {result}.")
 
 
-def detect():
+def main():
     game = NumberGuessingGame(1, 100)
     interface = GameInterface(game)
     interface.start()
 
 
 if __name__ == "__main__":
-    detect()
+    main()
