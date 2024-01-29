@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_DIR=$(dirname "$0")
+SCRIPT_DIR=$(realpath $(dirname "$0"))
 BASHRC="$HOME/.bashrc"
 VENV_DIR=$SCRIPT_DIR/venv
 VENV_PYTHON_PATH="$VENV_DIR/bin/python"
@@ -77,7 +77,7 @@ replace_or_add_shebang() {
 }
 
 prepare_app_tmp_path() {
-    mkdir $TMP_DIR
+    mkdir -p $TMP_DIR
     ln -s "$START_APP_PATH" "$START_APP_LINK"
     echo 'export PATH=$PATH:'$TMP_DIR >> $BASHRC
 }
