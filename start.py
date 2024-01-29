@@ -3,6 +3,7 @@ import typer
 from rich.console import Console
 
 from games import x_pedition, digit_detective, calculator
+from ui import gui
 from utils import HEADER
 
 console = Console()
@@ -16,10 +17,9 @@ def game_app():
         help=HEADER,
     )
 
-    # @app.command()
     @app.callback(invoke_without_command=True)
     def main():
-        print('DUPA')
+        gui.start_game()
 
     @app.command(name='x-perdition', help='this is game x-pedition')
     def x_pedition_app():
