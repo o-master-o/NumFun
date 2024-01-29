@@ -1,5 +1,8 @@
 import random
 
+from games.base import Game
+from ui.cli_ui import CliUI
+
 
 class NumberGuessingGame:
     def __init__(self, min_num, max_num):
@@ -16,16 +19,15 @@ class NumberGuessingGame:
             return "correct"
 
 
-class DigitDetectiveGame:
-    def __init__(self, game):
-        self.game = game
+class DigitDetective(Game):
 
     def start(self):
-        print(f"Welcome to the Number Guessing Game! Guess a number between {self.game.min_num} and {self.game.max_num}.")
+        game = NumberGuessingGame(1, 100)
+        print(f"Welcome to the Number Guessing Game! Guess a number between {game.min_num} and {game.max_num}.")
 
         while True:
             guess = int(input("Enter your guess: "))
-            result = self.game.check_guess(guess)
+            result = game.check_guess(guess)
             if result == "correct":
                 print("Congratulations! You've guessed the number!")
                 break
@@ -34,7 +36,7 @@ class DigitDetectiveGame:
 
 
 def main():
-    DigitDetectiveGame(NumberGuessingGame(1, 100)).start()
+    DigitDetective(CliUI).start()
 
 
 if __name__ == "__main__":
