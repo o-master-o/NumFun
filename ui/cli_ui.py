@@ -1,21 +1,8 @@
 import os
-from abc import ABC, abstractmethod
 
 import emoji
 
-
-class UI(ABC):
-    @abstractmethod
-    def reset_screen(self):
-        pass
-
-    @abstractmethod
-    def display_message(self, message):
-        pass
-
-    @abstractmethod
-    def ask_question(self, message):
-        pass
+from ui.base import UI
 
 
 class CliUI(UI):

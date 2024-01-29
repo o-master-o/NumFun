@@ -1,6 +1,7 @@
 #!/home/yoda/work/python_projects/NumFun/venv/bin/python
 import typer
 from rich.console import Console
+from typer import Context
 
 from games import x_pedition, digit_detective, calculator
 from ui import gui
@@ -18,8 +19,9 @@ def game_app():
     )
 
     @app.callback(invoke_without_command=True)
-    def main():
-        gui.start_game()
+    def main(ctx: Context):
+        if ctx.invoked_subcommand is None:
+            gui.start_game()
 
     @app.command(name='x-perdition', help='this is game x-pedition')
     def x_pedition_app():

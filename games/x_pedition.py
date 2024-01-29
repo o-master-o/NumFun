@@ -80,7 +80,7 @@ class ExpressionGenerator:
         return f"{variables['a']} {operation} {variables['b']} = {variables['result']}", x
 
 
-class Game:
+class XpeditionGame:
 
     def __init__(self, ui, chances=3):
         self.chances = chances
@@ -89,6 +89,7 @@ class Game:
         self.generator = ExpressionGenerator()
 
     def start(self):
+        self._prepare()
 
         try:
             while True:
@@ -117,7 +118,7 @@ class Game:
         user_input = self.ui.ask_question("Press Enter to continue or type 'exit' and press Enter to exit: ")
         return user_input.strip().lower() != 'exit'
 
-    def prepare(self):
+    def _prepare(self):
         self.ui.reset_screen()
         self.ui.display_message('== X-pedition ==\nWelcome to the game\n')
         self._set_game_max_number()
@@ -141,8 +142,7 @@ class Game:
 
 
 def main():
-    game = Game(CliUI())
-    game.prepare()
+    game = XpeditionGame(CliUI())
     game.start()
 
 
