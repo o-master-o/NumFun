@@ -1,6 +1,7 @@
 import random
 from enum import Enum
 
+from games.base import Game
 from ui.cli_ui import CliUI
 
 
@@ -80,12 +81,12 @@ class ExpressionGenerator:
         return f"{variables['a']} {operation} {variables['b']} = {variables['result']}", x
 
 
-class XpeditionGame:
+class Xpedition(Game):
 
     def __init__(self, ui, chances=3):
+        super().__init__(ui)
         self.chances = chances
         self.operations = OPERATIONS.values_list()
-        self.ui = ui
         self.generator = ExpressionGenerator()
 
     def start(self):
@@ -142,7 +143,7 @@ class XpeditionGame:
 
 
 def main():
-    game = XpeditionGame(CliUI())
+    game = Xpedition(CliUI)
     game.start()
 
 

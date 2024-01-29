@@ -4,7 +4,10 @@ from rich.console import Console
 from typer import Context
 
 from games import x_pedition, digit_detective, calculator
+from games.calculator import Calculator
+from games.digit_detective import DigitDetective
 from ui import gui, cli_ui
+from ui.cli_ui import CliUI
 from utils import HEADER
 
 console = Console()
@@ -29,17 +32,17 @@ def game_app():
 
     @app.command(name='x-perdition', help='this is game x-pedition')
     def x_pedition_app():
-        x_pedition.main()
+        x_pedition.Xpedition(CliUI).start()
 
     @app.command(name='digit-detective', help='this is game digit-detectiven')
     def digit_detective_app():
         print("Hello digit_detective")
-        digit_detective.main()
+        digit_detective.DigitDetective(CliUI).start()
 
     @app.command(name='calculator', help='this is game calculator')
     def calculator_app():
         print("Hello calculator")
-        calculator.main()
+        calculator.Calculator(CliUI).start()
 
     return app
 

@@ -1,7 +1,16 @@
+from games.base import Game
+
+
+class Calculator(Game):
+
+    def start(self):
+        while True:
+            max_limit = input('Enter expression\n')
+            print(eval(max_limit))
+
+
 def main():
-    while True:
-        max_limit = input('Enter expression\n')
-        print(eval(max_limit))
+    Calculator().start()
 
 
 if __name__ == "__main__":
