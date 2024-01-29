@@ -1,2 +1,2 @@
-def start_game():
+def start_main_game_interface():
     print('GUI')

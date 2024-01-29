@@ -17,3 +17,7 @@ class CliUI(UI):
 
     def ask_question(self, message):
         return input(message)
+
+
+def start_main_game_interface():
+    print('CLI')
