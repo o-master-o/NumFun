@@ -11,11 +11,15 @@ console = Console()
 def game_app():
 
     app = typer.Typer(
-        no_args_is_help=True,
         rich_markup_mode='rich',
         name='num-fun',
         help=HEADER,
     )
+
+    # @app.command()
+    @app.callback(invoke_without_command=True)
+    def main():
+        print('DUPA')
 
     @app.command(name='x-perdition', help='this is game x-pedition')
     def x_pedition_app():

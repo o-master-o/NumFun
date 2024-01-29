@@ -1,9 +1,7 @@
 import random
-import os
-from abc import ABC, abstractmethod
 from enum import Enum
 
-import emoji
+from ui.cli_ui import CliUI
 
 
 class OPERATIONS(Enum):
@@ -82,34 +80,6 @@ class ExpressionGenerator:
         return f"{variables['a']} {operation} {variables['b']} = {variables['result']}", x
 
 
-class UI(ABC):
-    @abstractmethod
-    def reset_screen(self):
-        pass
-
-    @abstractmethod
-    def display_message(self, message):
-        pass
-
-    @abstractmethod
-    def ask_question(self, message):
-        pass
-
-
-class CliUI(UI):
-    CONGRATULATIONS = f"{emoji.emojize(':smiling_cat_with_heart-eyes:')} Congratulations!"
-    COMMISERATIONS = f"{emoji.emojize(':crying_cat:')} Try again!"
-
-    def reset_screen(self):
-        os.system('clear' if os.name == 'posix' else 'cls')
-
-    def display_message(self, message):
-        print(message)
-
-    def ask_question(self, message):
-        return input(message)
-
-
 class Game:
 
     def __init__(self, ui, chances=3):
@@ -154,7 +124,9 @@ class Game:
         self._set_available_operations()
 
     def _set_game_max_number(self):
-        self.generator.max_number = int(self.ui.ask_question("Enter the maximum number you want to solve. It should be not bigger than 1000: "))
+        answer = self.ui.ask_question("Enter the maximum number you want to solve. It should be not bigger than 1000: ")
+        self.generator.max_number = (int(answer) if answer else 20)
+        self.ui.display_message(f'Maximal number {self.generator.max_number} was set')
 
     def _set_available_operations(self):
         user_input = self.ui.ask_question("You have to choose operations you want to use\n"
