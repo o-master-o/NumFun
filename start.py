@@ -1,16 +1,23 @@
 #!/home/yoda/work/python_projects/NumFun/venv/bin/python
 import typer
-from rich.console import Console
 from typer import Context
 
 from games import x_pedition, digit_detective, calculator
 from games.calculator import Calculator
 from games.digit_detective import DigitDetective
+from games.manager import GameManager
+from games.x_pedition import Xpedition
 from ui import gui, cli_ui
 from ui.cli_ui import CliUI
+from ui.gui import GUI
 from utils import HEADER
 
-console = Console()
+
+games_list = {
+    "x-pedition": Xpedition,
+    "digit-detective": DigitDetective,
+    "calculator": Calculator
+}
 
 
 def game_app():
@@ -26,11 +33,11 @@ def game_app():
              gui_flag: bool = typer.Option(False, "--gui", "-g", help="Starts main game interface in graphical mode")):
         if ctx.invoked_subcommand is None:
             if gui_flag:
-                gui.start_main_game_interface()
+                GameManager(GUI).choose_game(games_list)
             else:
-                cli_ui.start_main_game_interface()
+                GameManager(CliUI).choose_game(games_list)
 
-    @app.command(name='x-perdition', help='this is game x-pedition')
+    @app.command(name='x-pedition', help='this is game x-pedition')
     def x_pedition_app():
         x_pedition.Xpedition(CliUI).start()
 
