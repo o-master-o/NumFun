@@ -16,8 +16,21 @@ class CliUI(UI):
     def reset_screen(self):
         os.system('clear' if os.name == 'posix' else 'cls')
 
+    def display_game_introduction(self, game_info):
+        introduction = (
+            f"{game_info['header']}"
+            f"\n  [bold]Description[not bold]\n"
+            f"  {game_info['description']}\n"
+            f"  [bold]How to Play[not bold]\n"
+            f"  {game_info['instruction']}\n"
+            f"  [bold]Control[not bold]\n"
+            f"  {game_info['control']}"
+        )
+
+        self._console.print(introduction)
+
     def display_message(self, message):
         self._console.print(f"  {message}")
 
     def ask_question(self, message):
-        return self._console.input(f"  {message}")
+        return self._console.input(f"{message}")

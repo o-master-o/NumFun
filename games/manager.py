@@ -1,3 +1,5 @@
+import time
+
 from prompt_toolkit import prompt
 
 from games.calculator import Calculator
@@ -52,13 +54,13 @@ class GameManager:
             self._play_game(self._choose_game(self._games_pocket.names))
             return True
         except KeyboardInterrupt:
-            print('Exit Numfun')
+            self.ui.display_message('\n[yellow]  Exit Numfun[/]')
             return False
 
     def _choose_game(self, games_names):
         game_completer = WordCompleter(games_names)
-        self.ui.display_message("[bold yellow]Control:[/] Press [yellow]TAB[/] to choose a game, press [yellow]Ctrl+C[/] to Exit")
-        selected_game_name = prompt("Choose a game: ", completer=game_completer, style=Style([('prompt', 'fg:ansiyellow')]))
+        self.ui.display_message("[bold yellow]Control:[/] Press [yellow]TAB[/] to choose a game, press [yellow]Ctrl+C[/] to Exit\n")
+        selected_game_name = prompt("  Choose a game: ", completer=game_completer, style=Style([('prompt', 'fg:ansiyellow')]))
         return self._games_pocket.get(selected_game_name)
 
     def _play_game(self, game):
@@ -66,6 +68,10 @@ class GameManager:
         try:
             game(ui=self.ui).start()
         except KeyboardInterrupt:
-            self.ui.display_message(f'[yellow]Exit game [bold]{game.NAME}[/]')
+            self.ui.display_message(f'\n[yellow]Exit game [bold]{game.NAME}[/]')
+            self.wait_user_to_read()
             return
+
+    def wait_user_to_read(self):
+        time.sleep(1)
 
