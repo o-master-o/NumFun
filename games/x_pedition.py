@@ -141,12 +141,3 @@ class Xpedition(Game):
                                           "For example +* will use +* (addition and multiplication expressions)\n"
                                           "Enter your answer: ")
         self.operations = user_input or OPERATIONS.values_list()
-
-
-def main():
-    game = Xpedition(CliUI)
-    game.start()
-
-
-if __name__ == "__main__":
-    main()
