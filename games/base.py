@@ -5,8 +5,8 @@ from ui.base import UI
 
 
 class Game(ABC):
-    def __init__(self, ui: Type[UI]):
-        self.ui = ui()
+    def __init__(self, ui):
+        self.ui = ui
 
     @abstractmethod
     def start(self):

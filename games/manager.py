@@ -1,13 +1,12 @@
-from typing import Type
-from games.base import Game
 from prompt_toolkit import prompt
 
 from games.calculator import Calculator
 from games.digit_detective import DigitDetective
 from games.x_pedition import Xpedition
-from ui.base import UI
+from prompt_toolkit.styles import Style
 from prompt_toolkit.completion import WordCompleter
 
+from utils import HEADER
 
 games_list = [Xpedition, DigitDetective, Calculator]
 
@@ -37,12 +36,14 @@ class GamesPocket:
 
 class GameManager:
     def __init__(self, ui, ):
-        self.ui = ui
+        self.ui = ui()
         self._games_pocket = GamesPocket(games_list)
 
     def start(self):
         play = True
         while play:
+            self.ui.reset_screen()
+            self.ui.display_message(HEADER)
             play = self._choose_and_play_game()
 
     def _choose_and_play_game(self):
@@ -55,13 +56,14 @@ class GameManager:
 
     def _choose_game(self, games_names):
         game_completer = WordCompleter(games_names)
-        selected_game_name = prompt("Choose a game: ", completer=game_completer)
+        self.ui.display_message("[bold yellow]Control:[/] Press [yellow]TAB[/] to choose a game, press [yellow]Ctrl+C[/] to Exit")
+        selected_game_name = prompt("Choose a game: ", completer=game_completer, style=Style([('prompt', 'fg:ansiyellow')]))
         return self._games_pocket.get(selected_game_name)
 
     def _play_game(self, game):
         try:
             game(ui=self.ui).start()
         except KeyboardInterrupt:
-            print(f'Exit game {game.NAME}')
+            self.ui.display_message(f'[yellow]Exit game [bold]{game.NAME}[/]')
             return
 
