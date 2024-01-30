@@ -1,10 +1,8 @@
 from games.base import Game
-from games.utils import CALCULATOR_HEADER
 
 
 class Calculator(Game):
     NAME = "Calculator"
-    HEADER = CALCULATOR_HEADER
 
     def start(self):
         while True:

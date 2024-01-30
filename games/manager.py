@@ -6,7 +6,7 @@ from games.x_pedition import Xpedition
 from prompt_toolkit.styles import Style
 from prompt_toolkit.completion import WordCompleter
 
-from games.utils import HEADER
+from games.utils import get_game_info
 
 games_list = [Xpedition, DigitDetective, Calculator]
 
@@ -40,10 +40,11 @@ class GameManager:
         self._games_pocket = GamesPocket(games_list)
 
     def start(self):
+        info = get_game_info('num-fun')
         play = True
         while play:
             self.ui.reset_screen()
-            self.ui.display_message(HEADER)
+            self.ui.display_message(info['header'])
             play = self._choose_and_play_game()
 
     def _choose_and_play_game(self):

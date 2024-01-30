@@ -4,19 +4,19 @@ from typer import Context
 
 from games import x_pedition, digit_detective, calculator
 from games.manager import GameManager
+from games.utils import get_game_info
 from ui.cli_ui import CliUI
 from ui.gui import GUI
-from games.utils import HEADER
 
 INTERFACES = { True: GUI, False: CliUI}
 
-
 def game_app():
+    info = get_game_info('num-fun')
 
     app = typer.Typer(
         rich_markup_mode='rich',
         name='num-fun',
-        help=HEADER,
+        help=info['header']
     )
 
     @app.callback(invoke_without_command=True)
