@@ -100,3 +100,7 @@ unknown-game:
   header: null
   description: "Unfortunately there is [bold]no description[/] for this game yet"
   instruction: "Sorry, there is [bold]no instruction[/] for this game yet"
+
+common:
+  game-sub-header: |
+    [bold blink]Press Enter[not bold] to start[not blink], press [bold]Ctrl+C[not bold] to return to the main menu
