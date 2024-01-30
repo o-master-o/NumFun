@@ -3,3 +3,4 @@ rich
 typer[all]
 prompt_toolkit
 pyyaml
+simpleeval
