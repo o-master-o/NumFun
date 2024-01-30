@@ -2,6 +2,7 @@ from games.base import Game
 
 
 class Calculator(Game):
+    NAME = "Calculator"
 
     def start(self):
         while True:
