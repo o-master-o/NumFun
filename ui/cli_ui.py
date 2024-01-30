@@ -51,4 +51,4 @@ class CliUI(UI):
         self._console.print(f"  {message}")
 
     def ask_question(self, message):
-        return self._console.input(f"{message}")
+        return self._console.input(f"  {message}")
