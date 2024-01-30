@@ -3,21 +3,12 @@ import typer
 from typer import Context
 
 from games import x_pedition, digit_detective, calculator
-from games.calculator import Calculator
-from games.digit_detective import DigitDetective
 from games.manager import GameManager
-from games.x_pedition import Xpedition
-from ui import gui, cli_ui
 from ui.cli_ui import CliUI
 from ui.gui import GUI
 from utils import HEADER
 
-
-games_list = {
-    "x-pedition": Xpedition,
-    "digit-detective": DigitDetective,
-    "calculator": Calculator
-}
+INTERFACES = { True: GUI, False: CliUI}
 
 
 def game_app():
@@ -32,10 +23,7 @@ def game_app():
     def main(ctx: Context,
              gui_flag: bool = typer.Option(False, "--gui", "-g", help="Starts main game interface in graphical mode")):
         if ctx.invoked_subcommand is None:
-            if gui_flag:
-                GameManager(GUI).choose_game(games_list)
-            else:
-                GameManager(CliUI).choose_game(games_list)
+            GameManager(INTERFACES[gui_flag]).start()
 
     @app.command(name='x-pedition', help='this is game x-pedition')
     def x_pedition_app():
