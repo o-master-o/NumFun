@@ -82,6 +82,7 @@ class ExpressionGenerator:
 
 
 class Xpedition(Game):
+    NAME = "X-pedition"
 
     def __init__(self, ui, chances=3):
         super().__init__(ui)

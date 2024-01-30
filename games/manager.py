@@ -9,35 +9,59 @@ from ui.base import UI
 from prompt_toolkit.completion import WordCompleter
 
 
-games_map = {
-    "x-pedition": Xpedition,
-    "digit-detective": DigitDetective,
-    "calculator": Calculator
-}
+games_list = [Xpedition, DigitDetective, Calculator]
 
 
-class GameManager:
-    def __init__(self, ui: Type[UI]):
-        self.ui = ui
+class GamesPocket:
 
-    def start(self):
-        while True:
-            self._choose_and_play_game()
+    def __init__(self, games):
+        self._games = {}
+        self._register_games(games)
 
-    def _choose_and_play_game(self):
-        try:
-            self._play_game(self._choose_game(games_map))
-        except KeyboardInterrupt:
-            print('Exit game')
+    def _register_games(self, games):
+        for g in games:
+            self._games.update({g.NAME: g})
 
-    def _choose_game(self, games_map: dict[str, Type[Game]]) -> Type[Game]:
-        game_completer = WordCompleter(list(games_map.keys()))
-        selected_game = prompt("Choose a game: ", completer=game_completer)
-        game = games_map.get(selected_game)
+    @property
+    def names(self):
+        return self._games.keys()
+
+    def get(self, game_name):
+        game = self._games.get(game_name)
         if game is None:
             print("Game not found.")
+            return None
         else:
             return game
 
+
+class GameManager:
+    def __init__(self, ui, ):
+        self.ui = ui
+        self._games_pocket = GamesPocket(games_list)
+
+    def start(self):
+        play = True
+        while play:
+            play = self._choose_and_play_game()
+
+    def _choose_and_play_game(self):
+        try:
+            self._play_game(self._choose_game(self._games_pocket.names))
+            return True
+        except KeyboardInterrupt:
+            print('Exit Numfun')
+            return False
+
+    def _choose_game(self, games_names):
+        game_completer = WordCompleter(games_names)
+        selected_game_name = prompt("Choose a game: ", completer=game_completer)
+        return self._games_pocket.get(selected_game_name)
+
     def _play_game(self, game):
-        game(ui=self.ui).start()
+        try:
+            game(ui=self.ui).start()
+        except KeyboardInterrupt:
+            print(f'Exit game {game.NAME}')
+            return
+

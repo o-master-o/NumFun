@@ -20,6 +20,7 @@ class NumberGuessingGame:
 
 
 class DigitDetective(Game):
+    NAME = "Digit-detective"
 
     def start(self):
         game = NumberGuessingGame(1, 100)
