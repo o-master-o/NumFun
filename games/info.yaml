@@ -1,0 +1,69 @@
+num-fun:
+  header: |
+    [yellow]
+      ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+      ┃                                                                   ┃
+      ┃   ███╗   ██╗██╗   ██╗███╗   ███╗    ███████╗██╗   ██╗███╗   ██╗   ┃
+      ┃   ████╗  ██║██║   ██║████╗ ████║    ██╔════╝██║   ██║████╗  ██║   ┃
+      ┃   ██╔██╗ ██║██║   ██║██╔████╔██║    █████╗  ██║   ██║██╔██╗ ██║   ┃
+      ┃   ██║╚██╗██║██║   ██║██║╚██╔╝██║    ██╔══╝  ██║   ██║██║╚██╗██║   ┃
+      ┃   ██║ ╚████║╚██████╔╝██║ ╚═╝ ██║    ██║     ╚██████╔╝██║ ╚████║   ┃
+      ┃   ╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝    ╚═╝      ╚═════╝ ╚═╝  ╚═══╝   ┃
+      ┃                                                                   ┃
+      ┃   ═══════════ Welcome to NumFun! Let's Enjoy Math! ════════════   ┃
+      ┃                                                                   ┃
+      ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+  control: |
+    [bold yellow]
+      Control:[/] Type answer and press [yellow]Enter[/] to answer, press [yellow]Ctrl+C[/] to return to the main games menu
+
+X-pedition:
+  header: |
+    [yellow]
+      ██╗  ██╗     ██████╗ ███████╗██████╗ ██╗████████╗██╗ ██████╗ ███╗   ██╗
+      ╚██╗██╔╝     ██╔══██╗██╔════╝██╔══██╗██║╚══██╔══╝██║██╔═══██╗████╗  ██║
+       ╚███╔╝█████╗██████╔╝█████╗  ██║  ██║██║   ██║   ██║██║   ██║██╔██╗ ██║
+       ██╔██╗╚════╝██╔═══╝ ██╔══╝  ██║  ██║██║   ██║   ██║██║   ██║██║╚██╗██║
+      ██╔╝ ██╗     ██║     ███████╗██████╔╝██║   ██║   ██║╚██████╔╝██║ ╚████║
+      ╚═╝  ╚═╝     ╚═╝     ╚══════╝╚═════╝ ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+  control: |
+    [bold yellow]
+      Control:[/] Type answer and press [yellow]Enter[/] to answer, press [yellow]Ctrl+C[/] to return to the main games menu
+  description: "Unfortunately there is [bold]no description[/] for this game yet"
+  instruction: "Sorry, there is [bold]no instruction[/] for this game yet"
+
+Digit-detective:
+  header: |
+    [yellow]
+      ██████╗ ██╗ ██████╗ ██╗████████╗   ██████╗ ███████╗████████╗███████╗ ██████╗████████╗██╗██╗   ██╗███████╗
+      ██╔══██╗██║██╔════╝ ██║╚══██╔══╝   ██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██║██║   ██║██╔════╝
+      ██║  ██║██║██║  ███╗██║   ██║█████╗██║  ██║█████╗     ██║   █████╗  ██║        ██║   ██║██║   ██║█████╗  
+      ██║  ██║██║██║   ██║██║   ██║╚════╝██║  ██║██╔══╝     ██║   ██╔══╝  ██║        ██║   ██║╚██╗ ██╔╝██╔══╝  
+      ██████╔╝██║╚██████╔╝██║   ██║      ██████╔╝███████╗   ██║   ███████╗╚██████╗   ██║   ██║ ╚████╔╝ ███████╗
+      ╚═════╝ ╚═╝ ╚═════╝ ╚═╝   ╚═╝      ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝   ╚═╝  ╚═══╝  ╚══════╝
+  control: |
+    [bold yellow]
+      Control:[/] Type answer and press [yellow]Enter[/] to answer, press [yellow]Ctrl+C[/] to return to the main games menu
+  description: "Unfortunately there is [bold]no description[/] for this game yet"
+  instruction: "Sorry, there is [bold]no instruction[/] for this game yet"
+
+
+Calculator:
+  header: |
+    [yellow]
+       ██████╗ █████╗ ██╗      ██████╗██╗   ██╗██╗      █████╗ ████████╗ ██████╗ ██████╗ 
+      ██╔════╝██╔══██╗██║     ██╔════╝██║   ██║██║     ██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
+      ██║     ███████║██║     ██║     ██║   ██║██║     ███████║   ██║   ██║   ██║██████╔╝
+      ██║     ██╔══██║██║     ██║     ██║   ██║██║     ██╔══██║   ██║   ██║   ██║██╔══██╗
+      ╚██████╗██║  ██║███████╗╚██████╗╚██████╔╝███████╗██║  ██║   ██║   ╚██████╔╝██║  ██║
+       ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+  control: |
+    [bold yellow]
+      Control:[/] Type answer and press [yellow]Enter[/] to answer, press [yellow]Ctrl+C[/] to return to the main games menu
+  description: "Unfortunately there is [bold]no description[/] for this game yet"
+  instruction: "Sorry, there is [bold]no instruction[/] for this game yet"
+
+unknown-game:
+  header: null
+  description: "Unfortunately there is [bold]no description[/] for this game yet"
+  instruction: "Sorry, there is [bold]no instruction[/] for this game yet"

@@ -2,3 +2,4 @@ emoji
 rich
 typer[all]
 prompt_toolkit
+pyyaml

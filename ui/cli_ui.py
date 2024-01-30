@@ -17,7 +17,7 @@ class CliUI(UI):
         os.system('clear' if os.name == 'posix' else 'cls')
 
     def display_message(self, message):
-        self._console.print(message)
+        self._console.print(f"  {message}")
 
     def ask_question(self, message):
-        return self._console.input(message)
+        return self._console.input(f"  {message}")
