@@ -2,6 +2,7 @@ import random
 
 from games.base import Game
 from ui.cli_ui import CliUI
+from games.utils import DIGIT_DETECTIVE_HEADER
 
 
 class NumberGuessingGame:
@@ -21,6 +22,7 @@ class NumberGuessingGame:
 
 class DigitDetective(Game):
     NAME = "Digit-detective"
+    HEADER = DIGIT_DETECTIVE_HEADER
 
     def start(self):
         game = NumberGuessingGame(1, 100)

@@ -3,6 +3,7 @@ from enum import Enum
 
 from games.base import Game
 from ui.cli_ui import CliUI
+from games.utils import X_PEDITION_HEADER
 
 
 class OPERATIONS(Enum):
@@ -83,9 +84,11 @@ class ExpressionGenerator:
 
 class Xpedition(Game):
     NAME = "X-pedition"
+    HEADER = X_PEDITION_HEADER
 
     def __init__(self, ui, chances=3):
         super().__init__(ui)
+
         self.chances = chances
         self.operations = OPERATIONS.values_list()
         self.generator = ExpressionGenerator()
@@ -121,7 +124,6 @@ class Xpedition(Game):
         return user_input.strip().lower() != 'exit'
 
     def _prepare(self):
-        self.ui.reset_screen()
         self.ui.display_message('== X-pedition ==\nWelcome to the game\n')
         self._set_game_max_number()
         self._set_available_operations()

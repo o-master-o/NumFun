@@ -6,7 +6,7 @@ from games import x_pedition, digit_detective, calculator
 from games.manager import GameManager
 from ui.cli_ui import CliUI
 from ui.gui import GUI
-from utils import HEADER
+from games.utils import HEADER
 
 INTERFACES = { True: GUI, False: CliUI}
 
