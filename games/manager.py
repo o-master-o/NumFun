@@ -6,7 +6,7 @@ from games.x_pedition import Xpedition
 from prompt_toolkit.styles import Style
 from prompt_toolkit.completion import WordCompleter
 
-from utils import HEADER
+from games.utils import HEADER
 
 games_list = [Xpedition, DigitDetective, Calculator]
 
@@ -61,6 +61,7 @@ class GameManager:
         return self._games_pocket.get(selected_game_name)
 
     def _play_game(self, game):
+        self.ui.reset_screen()
         try:
             game(ui=self.ui).start()
         except KeyboardInterrupt:
