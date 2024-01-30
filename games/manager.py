@@ -1,5 +1,3 @@
-import time
-
 from prompt_toolkit import prompt
 
 from games.calculator import Calculator
@@ -54,7 +52,9 @@ class GameManager:
             self._play_game(self._choose_game(self._games_pocket.names))
             return True
         except KeyboardInterrupt:
-            self.ui.display_message('\n[yellow]  Exit Numfun[/]')
+            self.ui.reset_screen()
+            self.ui.display_message('\n[yellow] You left the game [b]NumFun[not b]. \n '
+                                    'See you Later. 😉 Bye.. \n[/]')
             return False
 
     def _choose_game(self, games_names):
@@ -69,9 +69,4 @@ class GameManager:
             game(ui=self.ui).start()
         except KeyboardInterrupt:
             self.ui.display_message(f'\n[yellow]Exit game [bold]{game.NAME}[/]')
-            self.wait_user_to_read()
             return
-
-    def wait_user_to_read(self):
-        time.sleep(1)
-
