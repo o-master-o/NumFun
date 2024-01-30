@@ -34,11 +34,3 @@ class DigitDetective(Game):
                 break
             else:
                 print(f"Try guessing {result}.")
-
-
-def main():
-    DigitDetective(CliUI).start()
-
-
-if __name__ == "__main__":
-    main()

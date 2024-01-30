@@ -8,11 +8,3 @@ class Calculator(Game):
         while True:
             max_limit = input('Enter expression\n')
             print(eval(max_limit))
-
-
-def main():
-    Calculator().start()
-
-
-if __name__ == "__main__":
-    main()
