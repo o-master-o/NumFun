@@ -17,85 +17,84 @@ num-fun:
 
 X-pedition:
   header: |
-    [yellow]
       ██╗  ██╗     ██████╗ ███████╗██████╗ ██╗████████╗██╗ ██████╗ ███╗   ██╗
       ╚██╗██╔╝     ██╔══██╗██╔════╝██╔══██╗██║╚══██╔══╝██║██╔═══██╗████╗  ██║
        ╚███╔╝█████╗██████╔╝█████╗  ██║  ██║██║   ██║   ██║██║   ██║██╔██╗ ██║
        ██╔██╗╚════╝██╔═══╝ ██╔══╝  ██║  ██║██║   ██║   ██║██║   ██║██║╚██╗██║
       ██╔╝ ██╗     ██║     ███████╗██████╔╝██║   ██║   ██║╚██████╔╝██║ ╚████║
       ╚═╝  ╚═╝     ╚═╝     ╚══════╝╚═════╝ ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
-  control: "Type answer and press [yellow]Enter[/] to answer, press [yellow]Ctrl+C[/] to return to the main games menu"
+  control: |
+    Type answer and press [bold]Enter[not bold] to answer, press [bold]Ctrl+C[not bold] to return to the main games menu
   description: |
-    [yellow]
-      Welcome to X-pedition, an adventure where you solve math puzzles in a fun way!
-      Your mission is to find the missing number, known as 'x', in different math problems.
-      Ready to start your journey?
+    Welcome to X-pedition, an adventure where you solve math puzzles in a fun way!
+    Your mission is to find the missing number, known as 'x', in different math problems.
+    Ready to start your journey?
   instruction: |
+    [b]1.[not b] Set Your Challenge Level: First, you'll choose the biggest number you want in your puzzles. 
+       You can pick any number up to 1000 - the bigger the number, the trickier the puzzles!
+       Pick Your Math Adventures: Decide which math challenges you want to try. 
+       You can choose from adding (+), taking away (-), times (*), and division (/). 
+       Mix them any way you like!
     
-      [b]1.[not b] Set Your Challenge Level: First, you'll choose the biggest number you want in your puzzles. 
-         You can pick any number up to 1000 - the bigger the number, the trickier the puzzles!
-         Pick Your Math Adventures: Decide which math challenges you want to try. 
-         You can choose from adding (+), taking away (-), times (*), and division (/). 
-         Mix them any way you like!
-      
-      [bold]2.[not bold] Solve the Math Puzzles: 
-         The game will show you math problems with an 'x' in them. 
-         Your job is to work out what number 'x' should be. 
-         For example, if you see "3 + x = 5", what number should x be?
-      
-      [bold]3.[not bold] Guess and Check: You get three chances to guess the right answer for each puzzle. 
-         Type in your guess and see if you've cracked it!
+    [b]2.[not b] Solve the Math Puzzles: 
+       The game will show you math problems with an 'x' in them. 
+       Your job is to work out what number 'x' should be. 
+       For example, if you see "3 + x = 5", what number should x be?
+    
+    [b]3.[not b] Guess and Check: You get three chances to guess the right answer for each puzzle. 
+       Type in your guess and see if you've cracked it!
 
 Digit-detective:
   header: |
-    [yellow]
       ██████╗ ██╗ ██████╗ ██╗████████╗   ██████╗ ███████╗████████╗███████╗ ██████╗████████╗██╗██╗   ██╗███████╗
       ██╔══██╗██║██╔════╝ ██║╚══██╔══╝   ██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██║██║   ██║██╔════╝
       ██║  ██║██║██║  ███╗██║   ██║█████╗██║  ██║█████╗     ██║   █████╗  ██║        ██║   ██║██║   ██║█████╗  
       ██║  ██║██║██║   ██║██║   ██║╚════╝██║  ██║██╔══╝     ██║   ██╔══╝  ██║        ██║   ██║╚██╗ ██╔╝██╔══╝  
       ██████╔╝██║╚██████╔╝██║   ██║      ██████╔╝███████╗   ██║   ███████╗╚██████╗   ██║   ██║ ╚████╔╝ ███████╗
       ╚═════╝ ╚═╝ ╚═════╝ ╚═╝   ╚═╝      ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝   ╚═╝  ╚═══╝  ╚══════╝
-  control: "Type answer and press [yellow]Enter[/] to answer, press [yellow]Ctrl+C[/] to return to the main games menu"
+  control: |
+    Type answer and press [bold]Enter[not bold] to answer, press [bold]Ctrl+C[not bold] to return to the main games menu
   description: |
     Get ready for Digit-Detective, a super fun guessing game where you're the detective finding a secret number. 
     The game picks a mystery number, and you have to guess what it is using clues!
-    Have fun being a detective and finding the secret number! 🌟🔍🌟
+    Have fun being a detective and finding the secret number!
   instruction: |
-    [b]1[not b] Set maximal number you want to guess. 
-    [b]2[not b] Start Your Detective Work: 
-      The game picks a secret number in range from 1 to number you set. Your job is to guess what it is!
-    [b]3[not b] Make a Guess: Think of a number between 1 and 100 and type it in. 
+    [b]1.[not b] Set maximal number you want to guess. 
+    [b]2.[not b] Start Your Detective Work: 
+       The game picks a secret number in range from 1 to number you set. Your job is to guess what it is!
+    [b]3.[not b] Make a Guess: Think of a number between 1 and 100 and type it in. 
        Use the Clues: After each guess, the game gives you a hint. 
        It tells you if the secret number is higher or lower than your guess.
-    [b]5[not b] Guess Again: Use the hints to guess again. Keep going until you find the right number.
-    [b]6[not b] Celebrate Your Win: When you guess the number, you've solved the mystery! Great job!
+    [b]4.[not b] Guess Again: Use the hints to guess again. Keep going until you find the right number.
+    [b]5.[not b] Celebrate Your Win: When you guess the number, you've solved the mystery! Great job!
 
 
 Calculator:
   header: |
-    [yellow]
-       ██████╗ █████╗ ██╗      ██████╗██╗   ██╗██╗      █████╗ ████████╗ ██████╗ ██████╗ 
-      ██╔════╝██╔══██╗██║     ██╔════╝██║   ██║██║     ██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
-      ██║     ███████║██║     ██║     ██║   ██║██║     ███████║   ██║   ██║   ██║██████╔╝
-      ██║     ██╔══██║██║     ██║     ██║   ██║██║     ██╔══██║   ██║   ██║   ██║██╔══██╗
-      ╚██████╗██║  ██║███████╗╚██████╗╚██████╔╝███████╗██║  ██║   ██║   ╚██████╔╝██║  ██║
-       ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
-  control: "Type answer and press [yellow]Enter[/] to answer, press [yellow]Ctrl+C[/] to return to the main games menu"
-  description:  |
-    In Calculator, turn your computer into a cool math machine! 
-    Type in any math problem you want to solve. 
+    ██████╗ █████╗  ██╗      ██████╗██╗   ██╗██╗      █████╗ ████████╗ ██████╗ ██████╗ 
+    ██╔════╝██╔══██╗██║     ██╔════╝██║   ██║██║     ██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
+    ██║     ███████║██║     ██║     ██║   ██║██║     ███████║   ██║   ██║   ██║██████╔╝
+    ██║     ██╔══██║██║     ██║     ██║   ██║██║     ██╔══██║   ██║   ██║   ██║██╔══██╗
+    ╚██████╗██║  ██║███████╗╚██████╗╚██████╔╝███████╗██║  ██║   ██║   ╚██████╔╝██║  ██║
+    ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+
+  control: |
+    Type answer and press [bold]Enter[not bold] to answer, press [bold]Ctrl+C[not bold] to return to the main games menu
+  description: |
+    In Calculator, turn your computer into a cool math machine!
+    Type in any math problem you want to solve.
     You can use plus (+), minus (-), times (*), and divide (/) to make your own math challenges.
-    Dive into the joy of numbers
+    Dive into the joy of numbers"
   instruction: |
-    [b]1[not b] Enter Your Math Problem: When the game starts, type in a math problem. 
+    [b]1.[not b] Enter Your Math Problem: When the game starts, type in a math problem.
        You can make it as easy or as tricky as you like!
-    [b]2[not b] See the Answer: 
-       Press Enter, and the Calculator will tell you the answer right away. 
+    [b]2.[not b] See the Answer:
+       Press Enter, and the Calculator will tell you the answer right away.
        It's like magic with numbers!
-    [b]3[not b] Try As Many As You Like: There's no limit to how many problems you can solve. 
+    [b]3.[not b] Try As Many As You Like: There's no limit to how many problems you can solve.
        Keep trying new ones and see what answers you get.
-    [b]4[not b] End When You Want: When you're done playing, just close the game.
-    [b]5[not b] Explore and Learn: Have fun exploring different problems and seeing what answers you find!
+    [b]4.[not b] End When You Want: When you're done playing, just close the game.
+    [b]5.[not b] Explore and Learn: Have fun exploring different problems and seeing what answers you find!
 
 unknown-game:
   header: null
