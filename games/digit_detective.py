@@ -5,6 +5,7 @@ from games.base import Game
 
 class DigitDetective(Game):
     NAME = "Digit-detective"
+    DEFAULT_MAX_VALUE = 100
 
     def __init__(self, ui):
         super().__init__(ui)
@@ -14,6 +15,7 @@ class DigitDetective(Game):
 
     def start(self):
         self.max_num = self._ask_user_for_max_number()
+        self.ui.display_message(f"[green] Maximal value has been set to {self.max_num}")
         self.ui.display_message(f"[green]Now Guessing Game! Guess a number between {self.min_num} and {self.max_num}.[/]")
 
         self.target_num = random.randint(self.min_num, self.max_num)
@@ -29,13 +31,15 @@ class DigitDetective(Game):
 
     def _ask_user_for_max_number(self):
         while True:
-            answer = self.ui.ask_question("[yellow]Please provide maximal number bigger than 1 you want to guess, or press Enter to use 100\n"
-                                          "  [dim]Your answer: [/]")
+            answer = self.ui.ask_question(f"[yellow]Please provide maximal number bigger than 1 you want to guess, or press Enter to use default maximal value {self.DEFAULT_MAX_VALUE}\n"
+                                          f"[dim]Your answer: [/]")
             max_number = self._evaluate_max_value(answer)
             if max_number:
                 return max_number
 
     def _evaluate_max_value(self, value):
+        if not value:
+            return self.DEFAULT_MAX_VALUE
         try:
             max_int_num = int(value)
             if max_int_num <= 1:

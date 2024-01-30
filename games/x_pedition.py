@@ -2,7 +2,6 @@ import random
 from enum import Enum
 
 from games.base import Game
-from ui.cli_ui import CliUI
 
 
 class OPERATIONS(Enum):
@@ -83,6 +82,7 @@ class ExpressionGenerator:
 
 class Xpedition(Game):
     NAME = "X-pedition"
+    DEFAULT_MAX_VALUE = 20
 
     def __init__(self, ui, chances=3):
         super().__init__(ui)
@@ -92,7 +92,10 @@ class Xpedition(Game):
         self.generator = ExpressionGenerator()
 
     def start(self):
-        self._prepare()
+        self.generator.max_number = self._ask_user_for_max_number()
+        self.ui.display_message(f'[green]Maximal number was set to {self.generator.max_number}\n')
+        self.operations = self._ask_user_for_possible_operations_in_expressions()
+        self.ui.display_message(f"[green]Operations '{self.generator.max_number}' would be used\n")
 
         try:
             while True:
@@ -121,23 +124,53 @@ class Xpedition(Game):
         user_input = self.ui.ask_question("Press Enter to continue or type 'exit' and press Enter to exit: ")
         return user_input.strip().lower() != 'exit'
 
-    def _prepare(self):
-        self.ui.display_message('== X-pedition ==\nWelcome to the game\n')
-        self._set_game_max_number()
-        self._set_available_operations()
+    # def _set_game_max_number(self):
+    #     answer = self.ui.ask_question("Enter the maximum number you want to solve. It should be not bigger than 1000: ")
+    #     self.generator.max_number = (int(answer) if answer else 20)
+    #     self.ui.display_message(f'Maximal number {self.generator.max_number} was set')
 
-    def _set_game_max_number(self):
-        answer = self.ui.ask_question("Enter the maximum number you want to solve. It should be not bigger than 1000: ")
-        self.generator.max_number = (int(answer) if answer else 20)
-        self.ui.display_message(f'Maximal number {self.generator.max_number} was set')
+    def _ask_user_for_possible_operations_in_expressions(self):
+        question = (f"[yellow]Now You have to choose operations among [b]\'{', '.join(OPERATIONS.values_list())}\'[not b] you want to use\n"
+                    f"For example for input [b]+*[not b] will be used expressions with operators [b]+*[not b] (addition and multiplication)\n"
+                    f"Please provide it, or press Enter to use all operations in expressions: \'{''.join(OPERATIONS.values_list())}'\n"
+                    f"[dim]Enter your answer: ")
+        while True:
+            answer = self.ui.ask_question(question)
+            operations = self._evaluate_chosen_operations(answer)
+            if operations:
+                return operations
 
-    def _set_available_operations(self):
-        user_input = self.ui.ask_question("You have to choose operations you want to use\n"
-                                          "+) +\n"
-                                          "-) -\n"
-                                          "*) *\n"
-                                          "/) /\n"
-                                          "By default all operations will be used '+-*/'"
-                                          "For example +* will use +* (addition and multiplication expressions)\n"
-                                          "Enter your answer: ")
-        self.operations = user_input or OPERATIONS.values_list()
+    def _ask_user_for_max_number(self):
+        question = (f"[yellow]Now we should choose maximal number you want to solve.\n"
+                    f"Number should be positive and bigger or equal to {self.DEFAULT_MAX_VALUE}\n"
+                    f"Please provide it, or press Enter to use default value {self.DEFAULT_MAX_VALUE}\n"
+                    f"[dim]Your answer: [/]")
+        while True:
+            answer = self.ui.ask_question(question)
+            max_number = self._evaluate_max_value(answer)
+            if max_number:
+                return max_number
+
+    def _evaluate_max_value(self, value):
+        if not value:
+            return self.DEFAULT_MAX_VALUE
+        try:
+            max_int_num = int(value)
+            if max_int_num < self.DEFAULT_MAX_VALUE:
+                raise ValueError
+            return max_int_num
+        except ValueError:
+            self.ui.display_message(f"[bold red] Value should be integer number, and bigger than or equal to {self.DEFAULT_MAX_VALUE}\n")
+
+    def _evaluate_chosen_operations(self, value):
+        if not value:
+            return OPERATIONS.values_list()
+        try:
+            user_operations = set(value)
+            for i in user_operations:
+                if i not in self.operations:
+                    raise ValueError
+            return list(user_operations)
+        except ValueError:
+            self.ui.display_message(f"[bold red] Operations should be in list of operations: \'{''.join(OPERATIONS.values_list())}\'\n")
+
