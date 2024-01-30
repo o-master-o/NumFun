@@ -8,6 +8,10 @@ class UI(ABC):
         pass
 
     @abstractmethod
+    def display_game_introduction(self, message):
+        pass
+
+    @abstractmethod
     def display_message(self, message):
         pass
 
