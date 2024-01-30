@@ -48,7 +48,10 @@ class CliUI(UI):
         self._console.print(Panel(header, expand=False, border_style="yellow"))
 
     def display_message(self, message):
-        self._console.print(f"  {message}")
+        self._console.print(self._format_message(message))
 
     def ask_question(self, message):
-        return self._console.input(f"  {message}")
+        return self._console.input(self._format_message(message))
+
+    def _format_message(self, message):
+        return '\n  '.join(''.join(['  ', message]).split('\n'))
