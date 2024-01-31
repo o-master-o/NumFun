@@ -15,7 +15,7 @@ class DigitDetective(Game):
 
     def start(self):
         self.max_num = self._ask_user_for_max_number()
-        self.ui.display_message(f"[green] Maximal value has been set to {self.max_num}")
+        self.ui.display_message(f"[green]Maximal value has been set to {self.max_num}")
         self.ui.display_message(f"[green]Now Guessing Game! Guess a number between {self.min_num} and {self.max_num}.[/]")
 
         self.target_num = random.randint(self.min_num, self.max_num)
