@@ -112,6 +112,9 @@ class Xpedition(Game):
 
     def attempt_solve(self, answer):
         for _ in range(self.chances):
+            user_answer = self.ui.ask_question("Enter the value of x: ")
+            if not user_answer:
+                continue
             user_answer = int(self.ui.ask_question("Enter the value of x: "))
             if user_answer == answer:
                 self.ui.display_message(self.ui.CONGRATULATIONS)
@@ -123,11 +126,6 @@ class Xpedition(Game):
     def prompt_continue(self):
         user_input = self.ui.ask_question("Press Enter to continue or type 'exit' and press Enter to exit: ")
         return user_input.strip().lower() != 'exit'
-
-    # def _set_game_max_number(self):
-    #     answer = self.ui.ask_question("Enter the maximum number you want to solve. It should be not bigger than 1000: ")
-    #     self.generator.max_number = (int(answer) if answer else 20)
-    #     self.ui.display_message(f'Maximal number {self.generator.max_number} was set')
 
     def _ask_user_for_possible_operations_in_expressions(self):
         question = (f"[yellow]Now You have to choose operations among [b]\'{', '.join(OPERATIONS.values_list())}\'[not b] you want to use\n"
