@@ -66,7 +66,9 @@ class GameManager:
     def _play_game(self, game):
         self.ui.reset_screen()
         try:
-            game(ui=self.ui).start()
+            while True:
+                game(ui=self.ui).start()
+                self.ui.ask_question('[yellow]Do you want to repeat game? Press [b]Enter[not b] to repeat, Press [b]Ctrl+C[not b] to return to the main menu')
         except KeyboardInterrupt:
             self.ui.display_message(f'\n[yellow]Exit game [bold]{game.NAME}[/]')
             return

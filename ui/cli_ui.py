@@ -35,7 +35,7 @@ class CliUI(UI):
         )
 
         self._console.print(Panel(introduction, expand=False, border_style="yellow"))
-        input()
+        self.ask_question('')
         self.reset_screen()
 
     def display_game_interface(self, game_info):
