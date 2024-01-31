@@ -39,14 +39,21 @@ clean_environment () {
     remove_tmp
 }
 
-install_virtualenv_if_needed() {
-    if ! command -v virtualenv &> /dev/null; then
-        echo "virtualenv is not installed. Installing it now..."
+get_python_version () {
+    local RAW_PYTHON_VERSION=$($1 --version)
+    USED_PYTHON_VERSION=${RAW_PYTHON_VERSION#* }
+    USED_PYTHON_SHORT_VERSION=${USED_PYTHON_VERSION%.*}
+}
+
+install_if_not_installed() {
+    package=$1
+
+    if ! dpkg -s "$package" &> /dev/null; then
+        echo "Package $package is not installed. Installing..."
         sudo apt-get update
-        sudo apt-get install -y virtualenv
-        echo "virtualenv has been installed."
+        sudo apt-get install -y "$package"
     else
-        echo "virtualenv is already installed."
+        echo "Package $package is already installed."
     fi
 }
 
@@ -89,10 +96,13 @@ if ! find_suitable_python; then
     exit 1
 fi
 
-clear_screen
+# clear_screen
 echo "Using Python at $FOUND_PYTHON_PATH for installation."
+get_python_version $FOUND_PYTHON_PATH
+echo $USED_PYTHON_SHORT_VERSION
 clean_environment
-install_virtualenv_if_needed
+install_if_not_installed virtualenv
+install_if_not_installed "libpython$USED_PYTHON_SHORT_VERSION-dev"
 create_virtualenv $FOUND_PYTHON_PATH
 replace_or_add_shebang "$START_APP_PATH" "#!$VENV_PYTHON_PATH"
 add_to_bashrc "$START_TAG"
@@ -106,4 +116,4 @@ add_to_bashrc "$END_TAG"
 $shell
 clear_screen
 
-$START_APP_PATH
+# $START_APP_PATH
