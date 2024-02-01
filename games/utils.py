@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import yaml
+from pynput import keyboard
 
 INFO_YAML_PATH = Path(__file__).resolve().parent / "info.yaml"
 
