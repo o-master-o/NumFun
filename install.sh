@@ -4,7 +4,7 @@ BASHRC="$HOME/.bashrc"
 VENV_DIR=$SCRIPT_DIR/venv
 VENV_PYTHON_PATH="$VENV_DIR/bin/python"
 START_APP_PATH="$SCRIPT_DIR/start.py"
-TMP_DIR="$SCRIPT_DIR/tmp"
+TMP_DIR="$HOME/.config/NumFun/tmp"
 START_APP_LINK="$TMP_DIR/numfun"
 source $SCRIPT_DIR/version_check.sh
 START_TAG="# NumFun game -- start tag"
@@ -83,37 +83,28 @@ replace_or_add_shebang() {
     fi
 }
 
-prepare_app_tmp_path() {
-    mkdir -p $TMP_DIR
-    ln -s "$START_APP_PATH" "$START_APP_LINK"
-    echo 'export PATH=$PATH:'$TMP_DIR >> $BASHRC
-}
 
 # Installation steps ---------->
-
+clear_screen
 if ! find_suitable_python; then
     echo "Installation cannot proceed without a suitable Python version."
     exit 1
 fi
-
-# clear_screen
 echo "Using Python at $FOUND_PYTHON_PATH for installation."
 get_python_version $FOUND_PYTHON_PATH
-echo $USED_PYTHON_SHORT_VERSION
 clean_environment
 install_if_not_installed virtualenv
 install_if_not_installed "libpython$USED_PYTHON_SHORT_VERSION-dev"
 create_virtualenv $FOUND_PYTHON_PATH
 replace_or_add_shebang "$START_APP_PATH" "#!$VENV_PYTHON_PATH"
-add_to_bashrc "$START_TAG"
 
-prepare_app_tmp_path
+add_to_bashrc "$START_TAG"
+add_to_bashrc "alias num-fun='$VENV_PYTHON_PATH $START_APP_PATH'"
 source "$VENV_DIR/bin/activate"
 install_requirements
-"$VENV_PYTHON_PATH" "$START_APP_LINK" --install-completion
+"$VENV_PYTHON_PATH" "$START_APP_PATH" --install-completion
 deactivate
 add_to_bashrc "$END_TAG"
-$shell
-clear_screen
 
-# $START_APP_PATH
+alias num-fun='$VENV_PYTHON_PATH $START_APP_PATH'
+clear_screen

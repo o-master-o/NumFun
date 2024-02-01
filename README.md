@@ -33,7 +33,7 @@ Follow these steps to install NumFun:
 3. **Start the Game**:  
 Once installed, you can start NumFun by executing:
    ```bash
-   numfun
+   num-fun
    ```  
    
    **Enjoy exploring the world of math with NumFun!**
