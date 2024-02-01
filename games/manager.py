@@ -1,10 +1,6 @@
-from prompt_toolkit import prompt
-
 from games.calculator import Calculator
 from games.digit_detective import DigitDetective
 from games.x_pedition import Xpedition
-from prompt_toolkit.styles import Style
-from prompt_toolkit.completion import WordCompleter
 
 from games.utils import get_game_info
 
@@ -38,7 +34,7 @@ class GameManager:
     def __init__(self, ui, ):
         self.ui = ui()
         self._games_pocket = GamesPocket(games_list)
-        self._chosen_game = None
+        self._selected_game = None
 
     def start(self):
         info = get_game_info('num-fun')
@@ -50,30 +46,24 @@ class GameManager:
 
     def _choose_and_play_game(self):
         try:
-            self._chosen_game = self._choose_game()
+            selected_game_name = self.ui.ask_user_to_select_game(self._games_pocket.names)
+            self._selected_game = self._games_pocket.get(selected_game_name)
             self._play_game()
-            # self.end_game()
             return True
         except KeyboardInterrupt:
             self._exit_num_fun()
             return False
         finally:
-            self._chosen_game = None
-
-    def _choose_game(self):
-        game_completer = WordCompleter(self._games_pocket.names)
-        self.ui.display_message("[bold yellow]Control:[/] Press [yellow]TAB[/] to choose a game, press [yellow]Ctrl+C[/] to Exit\n")
-        selected_game_name = prompt("  Choose a game: ", completer=game_completer, style=Style([('prompt', 'fg:ansiyellow')]))
-        return self._games_pocket.get(selected_game_name)
+            self._selected_game = None
 
     def _play_game(self):
         self.ui.reset_screen()
         try:
-            game = self._chosen_game(ui=self.ui)
+            game = self._selected_game(ui=self.ui)
             while True:
                 game.start()
         except KeyboardInterrupt:
-            self.ui.display_message(f'\n[yellow]Exit game [bold]{self._chosen_game.NAME}[/]')
+            self.ui.display_message(f'\n[yellow]Exit game [bold]{self._selected_game.NAME}[/]')
             return
 
     def _exit_num_fun(self):
