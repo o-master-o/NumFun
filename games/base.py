@@ -10,6 +10,7 @@ class Game(ABC):
         self.ui = ui
         self._game_info = get_game_info(self.NAME)
         self.ui.display_game_introduction(self._game_info)
+        self.ui.display_game_interface(self._game_info)
 
     @property
     def game_info(self):

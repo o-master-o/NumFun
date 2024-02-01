@@ -12,6 +12,10 @@ class UI(ABC):
         pass
 
     @abstractmethod
+    def ask_user_to_select_game(self, games_names):
+        pass
+
+    @abstractmethod
     def display_message(self, message):
         pass
 

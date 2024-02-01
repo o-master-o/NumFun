@@ -1,10 +1,6 @@
-from prompt_toolkit import prompt
-
 from games.calculator import Calculator
 from games.digit_detective import DigitDetective
 from games.x_pedition import Xpedition
-from prompt_toolkit.styles import Style
-from prompt_toolkit.completion import WordCompleter
 
 from games.utils import get_game_info
 
@@ -23,7 +19,7 @@ class GamesPocket:
 
     @property
     def names(self):
-        return self._games.keys()
+        return list(self._games.keys())
 
     def get(self, game_name):
         game = self._games.get(game_name)
@@ -38,6 +34,7 @@ class GameManager:
     def __init__(self, ui, ):
         self.ui = ui()
         self._games_pocket = GamesPocket(games_list)
+        self._selected_game = None
 
     def start(self):
         info = get_game_info('num-fun')
@@ -49,24 +46,27 @@ class GameManager:
 
     def _choose_and_play_game(self):
         try:
-            self._play_game(self._choose_game(self._games_pocket.names))
+            selected_game_name = self.ui.ask_user_to_select_game(self._games_pocket.names)
+            self._selected_game = self._games_pocket.get(selected_game_name)
+            self._play_game()
             return True
         except KeyboardInterrupt:
-            self.ui.reset_screen()
-            self.ui.display_message('\n[yellow] You left the game [b]NumFun[not b]. \n '
-                                    'See you Later. 😉 Bye.. \n[/]')
+            self._exit_num_fun()
             return False
+        finally:
+            self._selected_game = None
 
-    def _choose_game(self, games_names):
-        game_completer = WordCompleter(games_names)
-        self.ui.display_message("[bold yellow]Control:[/] Press [yellow]TAB[/] to choose a game, press [yellow]Ctrl+C[/] to Exit\n")
-        selected_game_name = prompt("  Choose a game: ", completer=game_completer, style=Style([('prompt', 'fg:ansiyellow')]))
-        return self._games_pocket.get(selected_game_name)
-
-    def _play_game(self, game):
+    def _play_game(self):
         self.ui.reset_screen()
         try:
-            game(ui=self.ui).start()
+            game = self._selected_game(ui=self.ui)
+            while True:
+                game.start()
         except KeyboardInterrupt:
-            self.ui.display_message(f'\n[yellow]Exit game [bold]{game.NAME}[/]')
+            self.ui.display_message(f'\n[yellow]Exit game [bold]{self._selected_game.NAME}[/]')
             return
+
+    def _exit_num_fun(self):
+        self.ui.reset_screen()
+        self.ui.display_message('\n[yellow] You left the game [b]NumFun[not b]. \n '
+                                'See you Later. 😉 Bye.. \n[/]')
