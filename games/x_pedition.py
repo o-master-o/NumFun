@@ -82,7 +82,7 @@ class ExpressionGenerator:
 
 class Xpedition(Game):
     NAME = "X-pedition"
-    DEFAULT_MAX_VALUE = 20
+    DEFAULT_MAX_VALUE = 10
 
     def __init__(self, ui, chances=3):
         super().__init__(ui)
@@ -109,7 +109,7 @@ class Xpedition(Game):
 
     def _attempts_to_solve(self, answer):
         for attempt_number in range(1, self.chances + 1):
-            user_answer = self.ui.ask_question(f"[green]Attempt [b]{attempt_number}[not b]: ")
+            user_answer = self._get_user_answer(attempt_number)
             if user_answer == answer:
                 self.ui.display_message(self.ui.CONGRATULATIONS)
                 return True
@@ -164,3 +164,9 @@ class Xpedition(Game):
         except ValueError:
             self.ui.display_message(f"[bold red] Operations should be in list of operations: \'{''.join(OPERATIONS.values_list())}\'\n")
 
+    def _get_user_answer(self, attempt_number):
+        user_answer = self.ui.ask_question(f"[green]Attempt [b]{attempt_number}[not b]: ")
+        try:
+            return int(user_answer)
+        except ValueError:
+            return user_answer

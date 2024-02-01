@@ -13,10 +13,9 @@ from ui.base import UI
 
 
 class CliUI(UI):
-    CONGRATULATIONS = f"{emoji.emojize(':smiling_cat_with_heart-eyes:')} Congratulations!"
+    CONGRATULATIONS = f"{emoji.emojize(':smiling_cat_with_heart-eyes:')} Congratulations!\n"
     COMMISERATIONS = f"{emoji.emojize(':crying_cat:')} Try again!"
     LIGHT_YELLOW = "#ffffbf"
-
 
     def __init__(self):
         self._console = Console()
