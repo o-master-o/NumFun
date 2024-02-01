@@ -103,4 +103,4 @@ unknown-game:
 
 common:
   game-sub-header: |
-    [bold blink]Press Enter[not bold] to start[not blink], press [bold]Ctrl+C[not bold] to return to the main menu
+    Press [b][blink]▶[not blink] Enter [blink]◀[not blink][not b] to start, press [bold]Ctrl+C[not bold] to return to the main menu
