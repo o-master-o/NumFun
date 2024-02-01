@@ -18,7 +18,7 @@ class OPERATIONS(Enum):
 class ExpressionGenerator:
 
     def __init__(self):
-        self._max_number = 10
+        self._max_number = None
 
     @property
     def max_number(self):
@@ -86,36 +86,30 @@ class Xpedition(Game):
 
     def __init__(self, ui, chances=3):
         super().__init__(ui)
-
         self.chances = chances
         self.operations = OPERATIONS.values_list()
         self.generator = ExpressionGenerator()
 
     def start(self):
         self.generator.max_number = self._ask_user_for_max_number()
-        self.ui.display_message(f'[green]Maximal number was set to {self.generator.max_number}\n')
         self.operations = self._ask_user_for_possible_operations_in_expressions()
-        self.ui.display_message(f"[green]Operations '{self.generator.max_number}' would be used\n")
+        while True:
+            self._play()
 
-        try:
-            while True:
-                expression, answer = self.generator.generate_random_expression(self.operations)
-                self.ui.display_message("=======================\nFind x:\n" + expression)
-                solved = self.attempt_solve(answer)
-                if not solved:
-                    self.ui.display_message(f"The correct answer was: {answer}")
-                if not self.prompt_continue():
-                    break
+    def _play(self):
+        expression, answer = self.generator.generate_random_expression(self.operations)
+        self.ui.display_message(f"[{self.ui.LIGHT_YELLOW}]==== Find [b]x[not b] ======================\n"
+                                f"  [white][b]{expression}[not b][{self.ui.LIGHT_YELLOW}]\n"
+                                f"==================================\n"
+                                f"[white]Enter the value of x: ")
+        solved = self._attempts_to_solve(answer)
+        if not solved:
+            self.ui.display_message(f"The correct answer was: {answer}\n")
+            return
 
-        except KeyboardInterrupt:
-            self.ui.display_message("\nGame exited.")
-
-    def attempt_solve(self, answer):
-        for _ in range(self.chances):
-            user_answer = self.ui.ask_question("Enter the value of x: ")
-            if not user_answer:
-                continue
-            user_answer = int(self.ui.ask_question("Enter the value of x: "))
+    def _attempts_to_solve(self, answer):
+        for attempt_number in range(1, self.chances + 1):
+            user_answer = self.ui.ask_question(f"[green]Attempt [b]{attempt_number}[not b]: ")
             if user_answer == answer:
                 self.ui.display_message(self.ui.CONGRATULATIONS)
                 return True
@@ -123,31 +117,29 @@ class Xpedition(Game):
                 self.ui.display_message(self.ui.COMMISERATIONS)
         return False
 
-    def prompt_continue(self):
-        user_input = self.ui.ask_question("Press Enter to continue or type 'exit' and press Enter to exit: ")
-        return user_input.strip().lower() != 'exit'
+    def _ask_user_for_max_number(self):
+        question = (f"[yellow]Now we should choose maximal number you want to solve.\n"
+                    f"Number should be positive and bigger or equal to {self.DEFAULT_MAX_VALUE}\n"
+                    f"Please provide it, or press Enter to use default value {self.DEFAULT_MAX_VALUE}\n"
+                    f"[dim]Enter Your answer: [/]")
+        while True:
+            answer = self.ui.ask_question(question)
+            max_number = self._evaluate_max_value(answer)
+            if max_number:
+                self.ui.display_message(f'[green]Maximal number will be set to {max_number}\n')
+                return max_number
 
     def _ask_user_for_possible_operations_in_expressions(self):
         question = (f"[yellow]Now You have to choose operations among [b]\'{', '.join(OPERATIONS.values_list())}\'[not b] you want to use\n"
                     f"For example for input [b]+*[not b] will be used expressions with operators [b]+*[not b] (addition and multiplication)\n"
-                    f"Please provide it, or press Enter to use all operations in expressions: \'{''.join(OPERATIONS.values_list())}'\n"
+                    f"Please provide it, or press Enter to use all operations in expressions: \'{' '.join(OPERATIONS.values_list())}'\n"
                     f"[dim]Enter your answer: ")
         while True:
             answer = self.ui.ask_question(question)
             operations = self._evaluate_chosen_operations(answer)
             if operations:
+                self.ui.display_message(f"[green]Operations '{' '.join(operations)}' will be used\n")
                 return operations
-
-    def _ask_user_for_max_number(self):
-        question = (f"[yellow]Now we should choose maximal number you want to solve.\n"
-                    f"Number should be positive and bigger or equal to {self.DEFAULT_MAX_VALUE}\n"
-                    f"Please provide it, or press Enter to use default value {self.DEFAULT_MAX_VALUE}\n"
-                    f"[dim]Your answer: [/]")
-        while True:
-            answer = self.ui.ask_question(question)
-            max_number = self._evaluate_max_value(answer)
-            if max_number:
-                return max_number
 
     def _evaluate_max_value(self, value):
         if not value:
