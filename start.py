@@ -10,6 +10,7 @@ from ui.gui import GUI
 
 INTERFACES = { True: GUI, False: CliUI}
 
+
 def game_app():
     info = get_game_info('num-fun')
 
