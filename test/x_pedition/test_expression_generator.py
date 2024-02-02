@@ -1,11 +1,11 @@
 import pytest
 
-from num_fun.games import ExpressionGenerator
+from num_fun.games.x_pedition import ExpressionGenerator
 
 
 @pytest.fixture
 def random(mocker):
-    return mocker.patch('x_pedition.random')
+    return mocker.patch('num_fun.games.x_pedition.random')
 
 
 @pytest.fixture
