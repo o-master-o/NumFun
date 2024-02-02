@@ -14,9 +14,18 @@ num-fun:
       ┃                                                                   ┃
       ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
   control: "Control:[/] Type answer and press [yellow]Enter[/] to answer, press [yellow]Ctrl+C[/] to return to the main games menu"
+  description: |
+    [b]NumFun[not b] is a fun and interactive math game aggregator designed for kids. 
+    NumFun offers a variety of engaging math games, suitable for young learners to explore and enjoy mathematics. 
+    It provides a terminal-based interface, with plans for future GUI integration, enhancing the learning experience.
+    
+    [b]Features[not b]
+    Multiple Games: NumFun aggregates various math games into one platform, making it easy and fun for kids to learn and practice math.
+    Extensible: Easily extend NumFun with more simple kids' games.
 
 X-pedition:
   header: |
+    [green]
       ██╗  ██╗     ██████╗ ███████╗██████╗ ██╗████████╗██╗ ██████╗ ███╗   ██╗
       ╚██╗██╔╝     ██╔══██╗██╔════╝██╔══██╗██║╚══██╔══╝██║██╔═══██╗████╗  ██║
        ╚███╔╝█████╗██████╔╝█████╗  ██║  ██║██║   ██║   ██║██║   ██║██╔██╗ ██║
@@ -46,6 +55,7 @@ X-pedition:
 
 Digit-detective:
   header: |
+    [blue]
       ██████╗ ██╗ ██████╗ ██╗████████╗   ██████╗ ███████╗████████╗███████╗ ██████╗████████╗██╗██╗   ██╗███████╗
       ██╔══██╗██║██╔════╝ ██║╚══██╔══╝   ██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██║██║   ██║██╔════╝
       ██║  ██║██║██║  ███╗██║   ██║█████╗██║  ██║█████╗     ██║   █████╗  ██║        ██║   ██║██║   ██║█████╗  
@@ -71,6 +81,7 @@ Digit-detective:
 
 Calculator:
   header: |
+    [white]
     ██████╗ █████╗  ██╗      ██████╗██╗   ██╗██╗      █████╗ ████████╗ ██████╗ ██████╗ 
     ██╔════╝██╔══██╗██║     ██╔════╝██║   ██║██║     ██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
     ██║     ███████║██║     ██║     ██║   ██║██║     ███████║   ██║   ██║   ██║██████╔╝
