@@ -10,6 +10,10 @@ source $SCRIPT_DIR/version_check.sh
 START_TAG="# NumFun game -- start tag"
 END_TAG="# NumFun game -- end tag"
 
+# Colors
+BLUE="\033[34;1m"
+YELLOW="\033[93;1m"
+NC="\033[0m"
 
 clear_screen () {
     clear -x
@@ -83,7 +87,7 @@ replace_or_add_shebang() {
     fi
 }
 
-# Installation steps ---------->
+# # Installation steps ---------->
 clear_screen
 if ! find_suitable_python; then
     echo "Installation cannot proceed without a suitable Python version."
@@ -101,9 +105,10 @@ add_to_bashrc "export PYTHONPATH='/home/yoda/work/python_projects/NumFun:$PYTHON
 add_to_bashrc "alias num-fun='$VENV_PYTHON_PATH $START_APP_PATH'"
 source "$VENV_DIR/bin/activate"
 install_requirements
-# "$VENV_PYTHON_PATH" "$START_APP_PATH" --install-completion
+"$VENV_PYTHON_PATH" "$START_APP_PATH" --install-completion
 deactivate
 add_to_bashrc "$END_TAG"
-
 alias num-fun='$VENV_PYTHON_PATH $START_APP_PATH'
 clear_screen
+echo -e "${BLUE}Installation complete${NC}"
+echo -e "Type ${YELLOW}num-fun${NC} to start the game"
