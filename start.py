@@ -36,14 +36,14 @@ class NumFun:
         return app
 
     def _get_console_man(self):
-        info = get_game_info('num-fun')
-        header = self._format_header(info['header'])
-        return ''.join([header, f"[{CliUI.LIGHT_YELLOW}]", info['description']])
+        game_info = get_game_info('num-fun')
+        return ''.join([self._format_header(game_info['header']),
+                        f"[{CliUI.LIGHT_YELLOW}]", game_info['description']])
 
     def _format_header(self, header):
         split_lines = header[1:].split('\n')
-        lines = [f"[{CliUI.YELLOW}]{line.strip()}" for line in split_lines]
-        return '\n'.join([f"{lines[1]}\n"] + lines[2:])
+        painted_lines = [f"[{CliUI.YELLOW}]{line.strip()}" for line in split_lines]
+        return '\n'.join([f"{painted_lines[1]}\n"] + painted_lines[2:])
 
 
 if __name__ == "__main__":
