@@ -1,4 +1,4 @@
-from games.base import Game
+from num_fun.games.base import Game
 from simpleeval import simple_eval, NameNotDefined, InvalidExpression
 
 

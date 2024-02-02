@@ -1,8 +1,8 @@
-from games.calculator import Calculator
-from games.digit_detective import DigitDetective
-from games.x_pedition import Xpedition
+from num_fun.games.calculator import Calculator
+from num_fun.games.digit_detective import DigitDetective
+from num_fun.games.x_pedition import Xpedition
 
-from games.utils import get_game_info
+from num_fun.games.utils import get_game_info
 
 games_list = [Xpedition, DigitDetective, Calculator]
 

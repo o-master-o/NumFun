@@ -8,8 +8,8 @@ from rich.panel import Panel
 from rich.console import Console
 import emoji
 
-from games.utils import get_game_info
-from ui.base import UI
+from num_fun.games.utils import get_game_info
+from num_fun.ui.base import UI
 
 
 class CliUI(UI):

@@ -1,7 +1,7 @@
 import random
 from enum import Enum
 
-from games.base import Game
+from num_fun.games.base import Game
 
 
 class OPERATIONS(Enum):

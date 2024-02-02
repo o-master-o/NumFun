@@ -1,6 +1,6 @@
 import random
 
-from games.base import Game
+from num_fun.games.base import Game
 
 
 class DigitDetective(Game):

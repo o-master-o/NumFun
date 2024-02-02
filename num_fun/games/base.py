@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from games.utils import get_game_info
+from num_fun.games.utils import get_game_info
 
 
 class Game(ABC):

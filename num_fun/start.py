@@ -3,8 +3,8 @@ from pathlib import Path
 import typer
 from typer import Context
 
-from games.manager import GameManager
-from games.utils import get_game_info
+from num_fun.games.manager import GameManager
+from num_fun.games.utils import get_game_info
 from ui.cli_ui import CliUI
 from ui.gui import GUI
 from utils import update_git_repo

@@ -3,7 +3,7 @@ SCRIPT_DIR=$(realpath $(dirname "$0"))
 BASHRC="$HOME/.bashrc"
 VENV_DIR=$SCRIPT_DIR/venv
 VENV_PYTHON_PATH="$VENV_DIR/bin/python"
-START_APP_PATH="$SCRIPT_DIR/start.py"
+START_APP_PATH="$SCRIPT_DIR/num_fun/start.py"
 TMP_DIR="$HOME/.config/NumFun/tmp"
 START_APP_LINK="$TMP_DIR/numfun"
 source $SCRIPT_DIR/version_check.sh
@@ -83,7 +83,6 @@ replace_or_add_shebang() {
     fi
 }
 
-
 # Installation steps ---------->
 clear_screen
 if ! find_suitable_python; then
@@ -96,13 +95,13 @@ clean_environment
 install_if_not_installed virtualenv
 install_if_not_installed "libpython$USED_PYTHON_SHORT_VERSION-dev"
 create_virtualenv $FOUND_PYTHON_PATH
-replace_or_add_shebang "$START_APP_PATH" "#!$VENV_PYTHON_PATH"
 
 add_to_bashrc "$START_TAG"
+add_to_bashrc "export PYTHONPATH='/home/yoda/work/python_projects/NumFun:$PYTHONPATH'"
 add_to_bashrc "alias num-fun='$VENV_PYTHON_PATH $START_APP_PATH'"
 source "$VENV_DIR/bin/activate"
 install_requirements
-"$VENV_PYTHON_PATH" "$START_APP_PATH" --install-completion
+# "$VENV_PYTHON_PATH" "$START_APP_PATH" --install-completion
 deactivate
 add_to_bashrc "$END_TAG"
 

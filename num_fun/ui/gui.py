@@ -1,6 +1,6 @@
 
 
-from ui.base import UI
+from num_fun.ui.base import UI
 
 
 class GUI(UI):
