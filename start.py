@@ -14,15 +14,6 @@ class NumFun:
     REPO_PATH = Path(__file__).parent
     INTERFACES = {True: GUI, False: CliUI}
 
-    def _get_console_man(self):
-        info = get_game_info('num-fun')
-        header = self._format_header(info['header'])
-        return header
-
-    def _format_header(self, header):
-        lines = header.split('\n')
-        return '\n'.join([f"{lines[0]}\n"] + lines[1:])
-
     def game_app(self):
 
         app = typer.Typer(
@@ -43,6 +34,16 @@ class NumFun:
             update_git_repo(self.REPO_PATH)
 
         return app
+
+    def _get_console_man(self):
+        info = get_game_info('num-fun')
+        header = self._format_header(info['header'])
+        return ''.join([header, f"[{CliUI.LIGHT_YELLOW}]", info['description']])
+
+    def _format_header(self, header):
+        split_lines = header[1:].split('\n')
+        lines = [f"[{CliUI.YELLOW}]{line.strip()}" for line in split_lines]
+        return '\n'.join([f"{lines[1]}\n"] + lines[2:])
 
 
 if __name__ == "__main__":
