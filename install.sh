@@ -70,22 +70,9 @@ create_virtualenv() {
 
 install_requirements() {
     pip install -r "$SCRIPT_DIR/requirements/base.txt"
+#     pip install -e "$SCRIPT_DIR"
 }
 
-add_shebang_to_start_file() {
-    $VENV_PYTHON_PATH
-}
-
-replace_or_add_shebang() {
-    local file_path="$1"
-    local new_shebang="$2"
-
-    if [[ $(head -n 1 "$file_path") == \#!* ]]; then
-        sed -i "1s|^.*$|$new_shebang|" "$file_path"
-    else
-        sed -i "1i$new_shebang" "$file_path"
-    fi
-}
 
 # # Installation steps ---------->
 clear_screen
