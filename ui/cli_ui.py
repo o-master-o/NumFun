@@ -26,8 +26,8 @@ class CliUI(UI):
     def display_game_introduction(self, game_info):
         common_info = get_game_info('common')
         introduction = (
-            f"[yellow]{game_info['header']}[/]\n"
-            f"[yellow]{common_info['game-sub-header']}[/]\n\n"
+            f"{game_info['header']}[/]\n"
+            f"{common_info['game-sub-header']}[/]\n\n"
             f"[bold yellow]Description[/]\n"
             f"[{self.LIGHT_YELLOW}]{game_info['description']}[/]\n"
             f"\n"
