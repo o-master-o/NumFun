@@ -1,23 +1,35 @@
-#!/home/yoda/work/python_projects/NumFun/venv/bin/python
+from pathlib import Path
+
 import typer
 from typer import Context
 
-from games import x_pedition, digit_detective, calculator
 from games.manager import GameManager
 from games.utils import get_game_info
 from ui.cli_ui import CliUI
 from ui.gui import GUI
+from utils import update_git_repo
 
-INTERFACES = { True: GUI, False: CliUI}
+REPO_PATH = Path(__file__).parent
+INTERFACES = {True: GUI, False: CliUI}
+
+
+def _format_text(text):
+    print(type(text))
+    print(text.split('\n'))
+
+
+def get_console_man():
+    info = get_game_info('num-fun')
+    return (f"{info['header']}\n"
+            f"{info['description']}")
 
 
 def game_app():
-    info = get_game_info('num-fun')
 
     app = typer.Typer(
         rich_markup_mode='rich',
         name='num-fun',
-        help=info['header']
+        help=get_console_man()
     )
 
     @app.callback(invoke_without_command=True)
@@ -26,19 +38,9 @@ def game_app():
         if ctx.invoked_subcommand is None:
             GameManager(INTERFACES[gui_flag]).start()
 
-    @app.command(name='x-pedition', help='this is game x-pedition')
-    def x_pedition_app():
-        x_pedition.Xpedition(CliUI).start()
-
-    @app.command(name='digit-detective', help='this is game digit-detectiven')
-    def digit_detective_app():
-        print("Hello digit_detective")
-        digit_detective.DigitDetective(CliUI).start()
-
-    @app.command(name='calculator', help='this is game calculator')
-    def calculator_app():
-        print("Hello calculator")
-        calculator.Calculator(CliUI).start()
+    @app.command(name='update', short_help='Update application')
+    def update():
+        update_git_repo(REPO_PATH)
 
     return app
 
