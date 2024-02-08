@@ -33,17 +33,10 @@ def test_calculator_solve_expressions_correctly(ui, assert_result, expression_st
     ui.ask_question.assert_called_with("[green]Enter math expression: [/]")
     assert_result(expected_result)
 
-#
-# def assert_answer(expected_result, ui):
-#     ui.display_message.assert_called_with(f"[{ui.LIGHT_YELLOW}]The answer is: {expected_result}\n")
 
-# def test_calculator_invalid_expression(ui, mocker):
-#     # Mocking invalid expression scenario
-#     ui.ask_question.return_value = "invalid expression"
-#     mocker.patch("num_fun.games.calculator.simple_eval", side_effect=SyntaxError)
-#
-#     calculator = Calculator(ui)
-#     calculator.start()
-#
-#     # Assertions to check correct handling of invalid expressions
-#     ui.display_message.assert_called_with("[bold red]Expression is not correct[/]\n")
+def test_calculator_invalid_expression(ui, mocker):
+    ui.ask_question.side_effect = ["invalid expression", Exception("Exit loop")]
+
+    with pytest.raises(Exception, match="Exit loop"):
+        Calculator(ui).start()
+    ui.display_message.assert_called_with("[bold red]Expression is not correct[/]\n")
