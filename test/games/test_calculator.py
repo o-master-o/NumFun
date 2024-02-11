@@ -4,12 +4,6 @@ from num_fun.games.calculator import Calculator, simple_eval
 
 
 @pytest.fixture
-def ui(mocker):
-    ui = mocker.Mock()
-    return ui
-
-
-@pytest.fixture
 def assert_result(ui):
     def _assert_result(expected_result):
         ui.display_message.assert_called_with(f"[{ui.LIGHT_YELLOW}]The answer is: {expected_result}\n")

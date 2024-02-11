@@ -15,12 +15,6 @@ ANOTHER_CORRECT_ANSWER = 'some another correct answer'
 
 
 @pytest.fixture
-def ui(mocker):
-    ui = mocker.Mock()
-    return ui
-
-
-@pytest.fixture
 def expression_generator(mocker):
     generator = mocker.patch('num_fun.games.x_pedition.ExpressionGenerator')
     generator.return_value.generate_random_expression.side_effect = [(SOME_EXPRESSION, CORRECT_ANSWER), (ANOTHER_EXPRESSION, CORRECT_ANSWER)]
@@ -49,7 +43,7 @@ def question_with_expression_message_call(ui):
 
 
 @pytest.mark.parametrize('max_number', ["-5", "-1", "0", "5", "9"])
-def test_x_pedition_set_max_number_correctly2(ui, expression_generator, max_number):
+def test_x_pedition_when_set_incorrect_max_number_user_should_be_shown_warning(ui, expression_generator, max_number):
     ui.ask_question.side_effect = [max_number, KeyError("Exit loop")]
 
     with pytest.raises(KeyError, match="Exit loop"):
@@ -65,7 +59,7 @@ def test_x_pedition_set_max_number_correctly2(ui, expression_generator, max_numb
     ("11", 11),
     ("100", 100),
 ])
-def test_x_pedition_set_max_number_correctly(ui, expression_generator, max_number, expected_max_number):
+def test_x_pedition_when_max_number_was_chosen_than_user_should_be_informed_about_value(ui, expression_generator, max_number, expected_max_number):
     ui.ask_question.side_effect = [max_number, KeyError("Exit loop")]
 
     with pytest.raises(KeyError, match="Exit loop"):
