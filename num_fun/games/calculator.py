@@ -1,13 +1,15 @@
 from num_fun.games.base import Game
 from simpleeval import simple_eval, NameNotDefined, InvalidExpression
 
+from num_fun.games.utils import repeat_endlessly
+
 
 class Calculator(Game):
     NAME = "Calculator"
 
+    @repeat_endlessly
     def start(self):
-        while True:
-            self._play()
+        self._play()
 
     def _play(self):
         answer = ''

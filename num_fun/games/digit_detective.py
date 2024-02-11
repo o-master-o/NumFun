@@ -1,6 +1,7 @@
 import random
 
 from num_fun.games.base import Game
+from num_fun.games.utils import repeat_endlessly
 
 
 class DigitDetective(Game):
@@ -13,9 +14,9 @@ class DigitDetective(Game):
         self.max_num = 100
         self.target_num = None
 
+    @repeat_endlessly
     def start(self):
-        while True:
-            self._play()
+        self._play()
 
     def _play(self):
         self._generate_number()
@@ -65,7 +66,6 @@ class DigitDetective(Game):
             except ValueError:
                 self.ui.display_message(f"[{self.ui.LIGHT_YELLOW}]Incorrect input. Enter your guess: ")
                 continue
-
 
     def _check_guess(self, guess):
         if guess < self.target_num:
