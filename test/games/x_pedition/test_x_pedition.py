@@ -48,13 +48,24 @@ def question_with_expression_message_call(ui):
     return _question
 
 
+@pytest.mark.parametrize('max_number', ["-5", "-1", "0", "5", "9"])
+def test_x_pedition_set_max_number_correctly2(ui, expression_generator, max_number):
+    ui.ask_question.side_effect = [max_number, KeyError("Exit loop")]
+
+    with pytest.raises(KeyError, match="Exit loop"):
+        Xpedition(ui).start()
+
+    user_warning_message = ui.display_message.mock_calls[0]
+    assert call('[bold red] Value should be integer number, and bigger than or equal to 10\n') == user_warning_message
+
+
 @pytest.mark.parametrize('max_number, expected_max_number', [
     ("", 10),
     ("10", 10),
     ("11", 11),
     ("100", 100),
 ])
-def test_x_pedition_set_max_number_correctly(ui, expression_generator, assert_result, max_number, expected_max_number):
+def test_x_pedition_set_max_number_correctly(ui, expression_generator, max_number, expected_max_number):
     ui.ask_question.side_effect = [max_number, KeyError("Exit loop")]
 
     with pytest.raises(KeyError, match="Exit loop"):
