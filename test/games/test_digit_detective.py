@@ -30,9 +30,9 @@ def random(mocker):
 
 @pytest.mark.parametrize('max_number', ["-5", "-1", "0", "1"])
 def test_digit_detective_when_set_incorrect_max_number_user_should_be_shown_warning(ui, max_number):
-    ui.ask_question.side_effect = [max_number, KeyError("Exit loop")]
+    ui.ask_question.side_effect = [max_number, KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(KeyError, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         DigitDetective(ui).start()
 
     user_warning_message = ui.display_message.mock_calls[0]
@@ -49,9 +49,9 @@ def test_digit_detective_when_set_incorrect_max_number_user_should_be_shown_warn
     ("2345", 2345),
 ])
 def test_digit_detective_set_max_number_correctly(ui, max_number, expected_max_number):
-    ui.ask_question.side_effect = [max_number, KeyError("Exit loop")]
+    ui.ask_question.side_effect = [max_number, KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(KeyError, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         DigitDetective(ui).start()
 
     max_number_message = ui.display_message.mock_calls[0]
@@ -65,9 +65,9 @@ def test_digit_detective_user_solve_expressions_correctly_in_attempts(ui, expect
                                                                       ):
     user_answers = [1, 3, 15, 6, 13, 8, 10, CORRECT_ANSWER]
     expected_ui_responses = ['bigger', 'bigger', 'smaller', 'bigger', 'smaller', 'bigger', 'smaller']
-    ui.ask_question.side_effect = [COMMON_MAX_NUMBER] + user_answers + [KeyError("Exit loop")]
+    ui.ask_question.side_effect = [COMMON_MAX_NUMBER] + user_answers + [KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(KeyError, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         DigitDetective(ui).start()
 
     attempts_result = ui.display_message.mock_calls[2:-1]

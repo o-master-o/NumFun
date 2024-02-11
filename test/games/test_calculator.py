@@ -19,9 +19,9 @@ def assert_result(ui):
     ("5-2+11", 14),
 ])
 def test_calculator_solve_expressions_correctly(ui, assert_result, expression_string, expected_result):
-    ui.ask_question.side_effect = [expression_string, Exception("Exit loop")]
+    ui.ask_question.side_effect = [expression_string, KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(Exception, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         Calculator(ui).start()
 
     ui.ask_question.assert_called_with("[green]Enter math expression: [/]")
@@ -29,8 +29,8 @@ def test_calculator_solve_expressions_correctly(ui, assert_result, expression_st
 
 
 def test_calculator_invalid_expression(ui, mocker):
-    ui.ask_question.side_effect = ["invalid expression", Exception("Exit loop")]
+    ui.ask_question.side_effect = ["invalid expression", KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(Exception, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         Calculator(ui).start()
     ui.display_message.assert_called_with("[bold red]Expression is not correct[/]\n")

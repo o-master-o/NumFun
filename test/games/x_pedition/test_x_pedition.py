@@ -44,9 +44,9 @@ def question_with_expression_message_call(ui):
 
 @pytest.mark.parametrize('max_number', ["-5", "-1", "0", "5", "9"])
 def test_x_pedition_when_set_incorrect_max_number_user_should_be_shown_warning(ui, expression_generator, max_number):
-    ui.ask_question.side_effect = [max_number, KeyError("Exit loop")]
+    ui.ask_question.side_effect = [max_number, KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(KeyError, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         Xpedition(ui).start()
 
     user_warning_message = ui.display_message.mock_calls[0]
@@ -60,9 +60,9 @@ def test_x_pedition_when_set_incorrect_max_number_user_should_be_shown_warning(u
     ("100", 100),
 ])
 def test_x_pedition_when_max_number_was_chosen_than_user_should_be_informed_about_value(ui, expression_generator, max_number, expected_max_number):
-    ui.ask_question.side_effect = [max_number, KeyError("Exit loop")]
+    ui.ask_question.side_effect = [max_number, KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(KeyError, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         Xpedition(ui).start()
 
     max_number_message = ui.display_message.mock_calls[0]
@@ -79,9 +79,9 @@ def test_x_pedition_when_max_number_was_chosen_than_user_should_be_informed_abou
     ("/+*-+++", ["/", "+", "*", "-"]),
 ])
 def test_x_pedition_set_operations_correctly(ui, expression_generator, user_operations, expected_operations):
-    ui.ask_question.side_effect = [COMMON_MAX_NUMBER, user_operations, KeyError("Exit loop")]
+    ui.ask_question.side_effect = [COMMON_MAX_NUMBER, user_operations, KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(KeyError, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         Xpedition(ui).start()
     assert Counter(expected_operations) == Counter(expression_generator().generate_random_expression.call_args[0][0])
 
@@ -95,9 +95,9 @@ def test_x_pedition_set_operations_correctly(ui, expression_generator, user_oper
 def test_x_pedition_user_solve_expressions_correctly_in_attempts(ui, expression_generator, build_expected_calls,
                                                                  question_with_expression_message_call, user_answers, expected_ui_results):
     build_expected_calls(expected_ui_results)
-    ui.ask_question.side_effect = [COMMON_MAX_NUMBER, ''] + user_answers + [KeyError("Exit loop")]
+    ui.ask_question.side_effect = [COMMON_MAX_NUMBER, ''] + user_answers + [KeyboardInterrupt("Exit loop")]
 
-    with pytest.raises(KeyError, match="Exit loop"):
+    with pytest.raises(KeyboardInterrupt, match="Exit loop"):
         Xpedition(ui).start()
 
     initial_expression_message_call = ui.display_message.mock_calls[2]
