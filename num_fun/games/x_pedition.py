@@ -138,7 +138,7 @@ class Xpedition(Game):
             answer = self.ui.ask_question(question)
             operations = self._evaluate_chosen_operations(answer)
             if operations:
-                self.ui.display_message(f"[green]Operations '{' '.join(operations)}' will be used\n")
+                self.ui.display_message(f"[green]Operations '{''.join(operations)}' will be used\n")
                 return operations
 
     def _evaluate_max_value(self, value):
