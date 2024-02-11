@@ -23,7 +23,7 @@ class DigitDetective(Game):
         self._gues_number()
 
     def _gues_number(self):
-        self.ui.display_message(f"[green]Now Guessing Game! Guess a number between {self.min_num} and {self.max_num}[/]")
+        self.ui.display_message(f"[green]Now playing game!\n Guess a number between {self.min_num} and {self.max_num}[/]")
         while True:
             user_guess = self._ask_user_to_guess_number()
             result = self._check_guess(user_guess)
@@ -36,12 +36,13 @@ class DigitDetective(Game):
 
     def _generate_number(self):
         self.max_num = self._ask_user_for_max_number()
-        self.ui.display_message(f"[green]Maximal value has been set to {self.max_num}")
+        self.ui.display_message(f"[green]Maximal value has been set to {self.max_num}\n")
         self.target_num = random.randint(self.min_num, self.max_num)
 
     def _ask_user_for_max_number(self):
         while True:
-            answer = self.ui.ask_question(f"[yellow]Please provide maximal number bigger than 1 you want to guess, or press Enter to use default maximal value {self.DEFAULT_MAX_VALUE}\n"
+            answer = self.ui.ask_question(f"[yellow]Please provide maximal number bigger than 1 you want to guess, "
+                                          f"or press Enter to use default maximal value {self.DEFAULT_MAX_VALUE}\n"
                                           f"[dim]Your answer: [/]")
             max_number = self._evaluate_max_value(answer)
             if max_number:
