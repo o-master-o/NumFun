@@ -11,7 +11,7 @@ from num_fun.utils import update_git_repo
 
 
 class NumFun:
-    REPO_PATH = Path(__file__).parent
+
     INTERFACES = {True: GUI, False: CliUI}
 
     def game_app(self):
@@ -32,7 +32,7 @@ class NumFun:
 
         @app.command(name='update', short_help='Update application')
         def update():
-            update_git_repo(self.REPO_PATH)
+            update_git_repo()
 
         return app
 
