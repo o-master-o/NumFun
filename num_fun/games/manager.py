@@ -22,12 +22,7 @@ class GamesPocket:
         return list(self._games.keys())
 
     def get(self, game_name):
-        game = self._games.get(game_name)
-        if game is None:
-            print("Game not found.")
-            return None
-        else:
-            return game
+        return self._games.get(game_name)
 
 
 class GameManager:
