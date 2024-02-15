@@ -5,9 +5,9 @@ from typer import Context
 
 from num_fun.games.manager import GameManager
 from num_fun.games.utils import get_game_info
-from ui.cli_ui import CliUI
-from ui.gui import GUI
-from utils import update_git_repo
+from num_fun.ui.cli_ui import CliUI
+from num_fun.ui.gui import GUI
+from num_fun.utils import update_git_repo
 
 
 class NumFun:
