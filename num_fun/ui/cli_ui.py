@@ -21,7 +21,8 @@ class CliUI(UI):
     def __init__(self):
         self._console = Console()
 
-    def reset_screen(self):
+    @classmethod
+    def reset_screen(cls):
         os.system('clear' if os.name == 'posix' else 'cls')
 
     def display_game_introduction(self, game_info):
@@ -74,3 +75,16 @@ class CliUI(UI):
             sys.stdout.write("\033[A")
             sys.stdout.write("\033[K")
         sys.stdout.flush()
+
+    @classmethod
+    def get_numfun_console_man(cls):
+        cls.reset_screen()
+        game_info = get_game_info('num-fun')
+        return ''.join([cls._format_header(game_info['header']),
+                        f"[{cls.LIGHT_YELLOW}]", game_info['description']])
+
+    @classmethod
+    def _format_header(cls, header):
+        split_lines = header[1:].split('\n')
+        painted_lines = [f"[{cls.YELLOW}]{line.strip()}" for line in split_lines]
+        return '\n'.join([f"{painted_lines[1]}\n"] + painted_lines[2:])
