@@ -1,10 +1,4 @@
-from num_fun.games.calculator import Calculator
-from num_fun.games.digit_detective import DigitDetective
-from num_fun.games.x_pedition import Xpedition
-
 from num_fun.games.utils import get_game_info
-
-games_list = [Xpedition, DigitDetective, Calculator]
 
 
 class GamesPocket:
@@ -26,7 +20,7 @@ class GamesPocket:
 
 
 class GameManager:
-    def __init__(self, ui, ):
+    def __init__(self, ui, games_list):
         self.ui = ui()
         self._games_pocket = GamesPocket(games_list)
         self._selected_game = None

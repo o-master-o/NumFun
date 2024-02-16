@@ -1,7 +1,10 @@
 import typer
 from typer import Context
 
+from num_fun.games.calculator import Calculator
+from num_fun.games.digit_detective import DigitDetective
 from num_fun.games.manager import GameManager
+from num_fun.games.x_pedition import Xpedition
 from num_fun.ui.cli_ui import CliUI
 from num_fun.ui.gui import GUI
 from num_fun.utils import update_git_repo
@@ -23,7 +26,7 @@ class NumFun:
         def main(ctx: Context, gui_flag: bool = typer.Option(False, "--gui", "-g",
                                                              help="Starts main game interface in graphical mode. Not implemented yet.")):
             if ctx.invoked_subcommand is None:
-                GameManager(self.INTERFACES[gui_flag]).start()
+                GameManager(self.INTERFACES[gui_flag], [Xpedition, DigitDetective, Calculator]).start()
 
         @app.command(name='update', short_help='Update application')
         def update():
