@@ -1,5 +1,9 @@
 import pytest
 from typer.testing import CliRunner
+
+from num_fun.games.calculator import Calculator
+from num_fun.games.digit_detective import DigitDetective
+from num_fun.games.x_pedition import Xpedition
 from num_fun.ui.cli_ui import CliUI
 from num_fun.ui.gui import GUI
 from num_fun.start import NumFun
@@ -41,5 +45,5 @@ def test_typer_app_executed_with_sub_cmd_update_starts_game_update(cli_runner, u
 def test_typer_app_executed_with_gui_flag_starts_game_manager_with_gui_ui(cli_runner, game_manager, gui_flag):
     result = cli_runner.invoke(NumFun().game_app(), [gui_flag], catch_exceptions=False)
     assert result.exit_code == 0
-    game_manager.assert_called_once_with(GUI)
+    game_manager.assert_called_once_with(GUI, [Xpedition, DigitDetective, Calculator])
     game_manager.return_value.start.assert_called_once()
