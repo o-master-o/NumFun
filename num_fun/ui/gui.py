@@ -4,6 +4,12 @@ from num_fun.ui.base import UI
 
 
 class GUI(UI):
+    BOLD_RED = "\x1b[31;1m"
+    NC = "\x1b[0m"
+
+    def __init__(self):
+        print(f"{self.BOLD_RED}GUI interface is under development. Please use CLI interface{self.NC}")
+        exit(0)
 
     def reset_screen(self):
         pass

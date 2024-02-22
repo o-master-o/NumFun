@@ -1,10 +1,4 @@
-from num_fun.games.calculator import Calculator
-from num_fun.games.digit_detective import DigitDetective
-from num_fun.games.x_pedition import Xpedition
-
 from num_fun.games.utils import get_game_info
-
-games_list = [Xpedition, DigitDetective, Calculator]
 
 
 class GamesPocket:
@@ -22,17 +16,12 @@ class GamesPocket:
         return list(self._games.keys())
 
     def get(self, game_name):
-        game = self._games.get(game_name)
-        if game is None:
-            print("Game not found.")
-            return None
-        else:
-            return game
+        return self._games.get(game_name)
 
 
 class GameManager:
-    def __init__(self, ui, ):
-        self.ui = ui()
+    def __init__(self, ui, games_list):
+        self._ui = ui()
         self._games_pocket = GamesPocket(games_list)
         self._selected_game = None
 
@@ -40,33 +29,31 @@ class GameManager:
         info = get_game_info('num-fun')
         play = True
         while play:
-            self.ui.reset_screen()
-            self.ui.display_message(info['header'])
+            self._ui.reset_screen()
+            self._ui.display_message(info['header'])
             play = self._choose_and_play_game()
+        self._exit_num_fun()
 
     def _choose_and_play_game(self):
         try:
-            selected_game_name = self.ui.ask_user_to_select_game(self._games_pocket.names)
+            selected_game_name = self._ui.ask_user_to_select_game(self._games_pocket.names)
             self._selected_game = self._games_pocket.get(selected_game_name)
             self._play_game()
             return True
         except KeyboardInterrupt:
-            self._exit_num_fun()
             return False
-        finally:
-            self._selected_game = None
 
     def _play_game(self):
-        self.ui.reset_screen()
+        self._ui.reset_screen()
         try:
-            game = self._selected_game(ui=self.ui)
+            game = self._selected_game(ui=self._ui)
             while True:
                 game.start()
         except KeyboardInterrupt:
-            self.ui.display_message(f'\n[yellow]Exit game [bold]{self._selected_game.NAME}[/]')
+            self._ui.display_message(f'\n[yellow]Exit game [bold]{self._selected_game.NAME}[/]')
             return
 
     def _exit_num_fun(self):
-        self.ui.reset_screen()
-        self.ui.display_message('\n[yellow] You left the game [b]NumFun[not b]. \n '
-                                'See you Later. 😉 Bye.. \n[/]')
+        self._ui.reset_screen()
+        self._ui.display_message('\n[yellow] You left the game [b]NumFun[not b]. \n '
+                                 'See you Later. 😉 Bye.. \n[/]')

@@ -2,6 +2,7 @@ import random
 from enum import Enum
 
 from num_fun.games.base import Game
+from num_fun.games.utils import repeat_endlessly
 
 
 class OPERATIONS(Enum):
@@ -93,9 +94,9 @@ class Xpedition(Game):
     def start(self):
         self.generator.max_number = self._ask_user_for_max_number()
         self.operations = self._ask_user_for_possible_operations_in_expressions()
-        while True:
-            self._play()
+        self._play()
 
+    @repeat_endlessly
     def _play(self):
         expression, answer = self.generator.generate_random_expression(self.operations)
         self.ui.display_message(f"[{self.ui.LIGHT_YELLOW}]==== Find [b]x[not b] ======================\n"
@@ -138,7 +139,7 @@ class Xpedition(Game):
             answer = self.ui.ask_question(question)
             operations = self._evaluate_chosen_operations(answer)
             if operations:
-                self.ui.display_message(f"[green]Operations '{' '.join(operations)}' will be used\n")
+                self.ui.display_message(f"[green]Operations '{''.join(operations)}' will be used\n")
                 return operations
 
     def _evaluate_max_value(self, value):
